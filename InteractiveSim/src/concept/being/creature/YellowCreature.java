@@ -1,9 +1,9 @@
 package concept.being.creature;
 
+import br.com.etyllica.util.SVGColor;
 import concept.being.Being;
 import concept.nutrient.Need;
 import concept.nutrient.Nutrient;
-import br.com.etyllica.util.SVGColor;
 
 public class YellowCreature extends Being {
 
@@ -12,9 +12,7 @@ public class YellowCreature extends Being {
 
 		color = SVGColor.YELLOW;
 		
-		//addNeed(new Need(Nutrient.WATER, 50));
+		addNeed(new Need(Nutrient.WATER, 50));
 	}
-
-	
 	
 }

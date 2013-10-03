@@ -1,18 +1,19 @@
 package concept.being;
 
-import geo.GeoMap;
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import map.GeoMap;
 import br.com.etyllica.core.video.Grafico;
 import concept.Concept;
 import concept.nutrient.Need;
+import concept.nutrient.Nutrient;
 
 public abstract class Being extends Concept{
 	
 	private double metabolism = 1f;
+	
 	private List<Need> needs;
 	
 	protected int interactionRadius = 42;
@@ -29,7 +30,7 @@ public abstract class Being extends Concept{
 	}
 	
 	protected void addNeed(Need need){
-		needs.add(need);		
+		needs.add(need);	
 	}
 	
 	@Override
@@ -50,15 +51,22 @@ public abstract class Being extends Concept{
 		g.setAlpha(100);
 	}
 	
-	public void live(){
+	public void react(){
+		
 		for(Need need: needs){
+			
 			if(need.getAmountReched()<need.getAmountPerDay()){
+				
 				Concept concept = geomap.search(need.getNutrient());
+				
 				if(concept!=null){
 					walkTo(concept.getX(), concept.getY());
 				}
+				
 			}
+			
 		}
+		
 	}	
 		
 	private void walkTo(int x, int y){
@@ -86,6 +94,26 @@ public abstract class Being extends Concept{
 	public void setGeomap(GeoMap geomap) {
 		this.geomap = geomap;
 	}
+
+	public List<Need> getNeeds() {
+		return needs;
+	}
+
+	public void setNeeds(List<Need> needs) {
+		this.needs = needs;
+	}
 	
+	public boolean haveNeed(Nutrient nutrient){
+		
+		for(Need need: needs){
+			
+			if(need.getNutrient()==nutrient){
+				return true;
+			}
+			
+		}
+		
+		return false;
+	}
 	
 }

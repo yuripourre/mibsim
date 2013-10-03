@@ -1,4 +1,4 @@
-import application.SimApplication;
+import application.MibSimApplication;
 import br.com.etyllica.Etyllica;
 
 
@@ -13,7 +13,7 @@ public class Simulator extends Etyllica{
 	@Override
 	public void startGame() {
 
-		setMainApplication(new SimApplication(w, h));
+		setMainApplication(new MibSimApplication(w, h));
 		
 	}
 

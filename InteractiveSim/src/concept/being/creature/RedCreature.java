@@ -14,7 +14,5 @@ public class RedCreature extends Being {
 
 		addNeed(new Need(Nutrient.WATER, 200));
 	}
-
-	
 	
 }

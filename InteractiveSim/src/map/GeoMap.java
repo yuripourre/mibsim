@@ -1,4 +1,4 @@
-package geo;
+package map;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +23,6 @@ public class GeoMap implements DrawableComponent{
 	public void add(Concept concept){
 		
 		avoidNull(concept.getX(), concept.getY());
-		
 		map.get(concept.getX()).get(concept.getY()).add(concept);
 		
 	}
@@ -79,6 +78,14 @@ public class GeoMap implements DrawableComponent{
 		}
 		
 		return null;
+		
+	}
+
+	public void addAll(List<Concept> concepts) {
+		
+		for(Concept concept: concepts){
+			this.add(concept);
+		}
 		
 	}
 	

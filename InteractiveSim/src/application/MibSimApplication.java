@@ -1,17 +1,18 @@
 package application;
 
-import geo.GeoMap;
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import map.GeoMap;
 import br.com.etyllica.core.application.Application;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyboardEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.event.Tecla;
 import br.com.etyllica.core.video.Grafico;
+import concept.Concept;
 import concept.being.Being;
 import concept.being.creature.BlueCreature;
 import concept.being.creature.RedCreature;
@@ -19,7 +20,7 @@ import concept.being.creature.YellowCreature;
 import concept.nutrient.FoodFountain;
 import concept.nutrient.WaterFountain;
 
-public class SimApplication extends Application{
+public class MibSimApplication extends Application{
 
 	private int width = 60;
 	private int height = 60;
@@ -29,11 +30,12 @@ public class SimApplication extends Application{
 	private List<Being> beings;
 	
 	private GeoMap geomap;
+	
+	private List<Concept> fontains = new ArrayList<Concept>();	
 
-	public SimApplication(int w, int h) {
+	public MibSimApplication(int w, int h) {
 		super(w, h);
 	}
-
 
 	@Override
 	public void load() {
@@ -51,8 +53,10 @@ public class SimApplication extends Application{
 		beings.add(new YellowCreature(36,28));
 		beings.add(new BlueCreature(10,7));
 
+		Random rand = new Random();
+		
 		for(Being being: beings){
-			being.getGeomap().add(wf);
+			being.getGeomap().add(fontains.get(rand.nextInt(fontains.size())));
 		}
 
 		updateAtFixedRate(700);
@@ -60,19 +64,17 @@ public class SimApplication extends Application{
 		loading = 100;
 	}
 	
-	private WaterFountain wf = new WaterFountain(4,4);
-	
 	private void generateRiver(){
 		
-		geomap.add(new WaterFountain(0,3));
-		geomap.add(new WaterFountain(1,3));
-		geomap.add(new WaterFountain(2,3));
-		geomap.add(new WaterFountain(3,3));
-		geomap.add(new WaterFountain(4,3));
-		geomap.add(new WaterFountain(5,3));
+		fontains.add(new WaterFountain(0,3));
+		fontains.add(new WaterFountain(1,3));
+		fontains.add(new WaterFountain(2,3));
+		fontains.add(new WaterFountain(3,3));
+		fontains.add(new WaterFountain(4,3));
+		fontains.add(new WaterFountain(5,3));
+		fontains.add(new WaterFountain(5,5));
 		
-		geomap.add(wf);
-		geomap.add(new WaterFountain(5,5));		
+		geomap.addAll(fontains);
 	}
 	
 	private void generateFood(){
@@ -90,7 +92,7 @@ public class SimApplication extends Application{
 	@Override
 	public void timeUpdate(){
 		for(Being being: beings){
-			being.live();
+			being.react();
 		}
 	}
 
