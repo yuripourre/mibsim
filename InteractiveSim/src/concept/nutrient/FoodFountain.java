@@ -1,7 +1,7 @@
 package concept.nutrient;
 
-import concept.Concept;
 import br.com.etyllica.util.SVGColor;
+import concept.Concept;
 
 
 public class FoodFountain extends Concept{

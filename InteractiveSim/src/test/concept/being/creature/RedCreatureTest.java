@@ -7,11 +7,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import test.concept.being.BeignTest;
 import concept.being.creature.RedCreature;
 import concept.nutrient.Nutrient;
 
-public class RedCreatureTest extends BeignTest{
+public class RedCreatureTest {
 
 	protected RedCreature being;
 	
