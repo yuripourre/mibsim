@@ -10,10 +10,10 @@ public class Fountain extends Layer{
 
 	protected Map<Nutrient, Integer> nutrients = new HashMap<Nutrient, Integer>();
 	
-	protected final static int TILE_SIZE = 16;
+	public final static int TILE_SIZE = 32;
 	
 	public Fountain(int x, int y){
-		super(x,y,TILE_SIZE,TILE_SIZE);		
+		super(x,y,TILE_SIZE,TILE_SIZE);
 	}
 	
 	public boolean have(Nutrient nutrient){

@@ -8,7 +8,7 @@ public class WaterFountain extends Concept{
 
 	public WaterFountain(int x, int y) {
 		super(x, y);
-		color = SVGColor.DEEP_SKY_BLUE;
+		colorFill = SVGColor.DEEP_SKY_BLUE;
 		nutrients.put(Nutrient.WATER, 100);
 	}
 	

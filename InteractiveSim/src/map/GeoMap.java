@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.etyllica.core.DrawableComponent;
-import br.com.etyllica.core.video.Grafico;
+import br.com.etyllica.core.video.Graphic;
 import concept.Concept;
 import concept.nutrient.Nutrient;
 
@@ -45,7 +45,7 @@ public class GeoMap implements DrawableComponent{
 		}
 	}
 	
-	public void draw(Grafico g){
+	public void draw(Graphic g){
 		
 		for(Map<Integer,List<Concept>> xMap: map.values()){
 			

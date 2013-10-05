@@ -12,7 +12,7 @@ public class BlueCreature extends Being {
 		
 		this.interactionRadius = 20;
 
-		this.color = SVGColor.DARK_BLUE;
+		this.colorFill = SVGColor.DARK_BLUE;
 		
 		this.addNeed(new Need(Nutrient.WATER, 500));
 	}

@@ -8,7 +8,7 @@ public class FoodFountain extends Concept{
 
 	public FoodFountain(int x, int y) {
 		super(x, y);
-		color = SVGColor.CORAL;
+		colorFill = SVGColor.CORAL;
 		nutrients.put(Nutrient.FOOD, 100);
 	}
 	

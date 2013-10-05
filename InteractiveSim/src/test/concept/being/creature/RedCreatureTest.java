@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import concept.being.creature.RedCreature;
 import concept.nutrient.Nutrient;
+import concept.nutrient.WaterFountain;
 
 public class RedCreatureTest {
 
@@ -32,10 +33,17 @@ public class RedCreatureTest {
 	@Test
 	public void testNeeds(){
 		
-		assertTrue(being.haveNeed(Nutrient.WATER));
-		
+		assertTrue(being.haveNeed(Nutrient.WATER));		
 		assertFalse(being.haveNeed(Nutrient.FOOD));
 		
+	}
+
+	@Test
+	public void testReaction(){
+		
+		being.getGeomap().add(new WaterFountain(20, 33));
+		being.react();
+		assertTrue(being.getX()<22);
 	}
 	
 }
