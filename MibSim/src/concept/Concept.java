@@ -20,20 +20,20 @@ public class Concept extends Fountain{
 	
 	public void draw(Graphic g){
 		g.setColor(colorFill);
-		g.fillRect((x+mapX)*TILE_SIZE, (y+mapY)*TILE_SIZE, w, h);
+		g.fillRect(x+mapX*TILE_SIZE, y+mapY*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 		
 		g.setColor(colorDraw);
-		g.drawRect((x+mapX)*TILE_SIZE, (y+mapY)*TILE_SIZE, w, h);
+		g.drawRect(x+mapX*TILE_SIZE, y+mapY*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 	}
 	
 	@Override
 	public boolean onMouse(int mx, int my) {
 
-		if(mx + 1 < (x+mapX)*TILE_SIZE)	return false;
-		if(mx > (x+mapX)*TILE_SIZE + getW())	return false;
+		if(mx + 1 < x+mapX*TILE_SIZE)	return false;
+		if(mx > x+mapX*TILE_SIZE + getW())	return false;
 
-		if(my + 1 < (y+mapY)*TILE_SIZE)	return false;
-		if(my > (y+mapY)*TILE_SIZE + getH())	return false;
+		if(my + 1 < y+mapY*TILE_SIZE)	return false;
+		if(my > y+mapY*TILE_SIZE + getH())	return false;
 
 		return true;
 

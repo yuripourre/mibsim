@@ -23,11 +23,11 @@ import concept.nutrient.WaterFountain;
 
 public class MibSimApplication extends Application{
 
-	private final int MAP_WIDTH = 10;
-	private final int MAP_HEIGHT = 10;
+	private final int MAP_WIDTH = 800;
+	private final int MAP_HEIGHT = 800;
 	
-	private int mapX = 20;
-	private int mapY = 5;
+	private int mapX = 0;
+	private int mapY = 0;
 
 	private int width = 60;
 	private int height = 60;
@@ -58,12 +58,12 @@ public class MibSimApplication extends Application{
 		geomap.addAll(fountains);
 
 		beings = new ArrayList<Being>();
-		beings.add(new RedCreature(16,6));
-		beings.add(new RedCreature(19,7));
-		beings.add(new YellowCreature(38,19));
-		beings.add(new YellowCreature(35,22));
-		beings.add(new YellowCreature(36,28));
-		beings.add(new BlueCreature(17,9));
+		beings.add(new RedCreature(160,60));
+		beings.add(new RedCreature(190,70));
+		beings.add(new YellowCreature(380,190));
+		beings.add(new YellowCreature(350,220));
+		beings.add(new YellowCreature(360,280));
+		beings.add(new BlueCreature(170,90));
 
 		Random rand = new Random();
 
@@ -82,25 +82,25 @@ public class MibSimApplication extends Application{
 
 	private void generateRiver(){
 
-		fountains.add(new WaterFountain(10,3));
-		fountains.add(new WaterFountain(11,3));
-		fountains.add(new WaterFountain(12,3));
-		fountains.add(new WaterFountain(13,3));
-		fountains.add(new WaterFountain(14,3));
-		fountains.add(new WaterFountain(15,3));
-		fountains.add(new WaterFountain(15,5));
+		fountains.add(new WaterFountain(100,30));
+		fountains.add(new WaterFountain(110,30));
+		fountains.add(new WaterFountain(120,30));
+		fountains.add(new WaterFountain(130,30));
+		fountains.add(new WaterFountain(140,30));
+		fountains.add(new WaterFountain(150,30));
+		fountains.add(new WaterFountain(150,50));
 
 	}
 
 	private void generateFood(){
 
-		fountains.add(new FoodFountain(12,9));
-		fountains.add(new FoodFountain(13,9));
-		fountains.add(new FoodFountain(14,9));
+		fountains.add(new FoodFountain(120,90));
+		fountains.add(new FoodFountain(130,90));
+		fountains.add(new FoodFountain(140,90));
 
-		fountains.add(new FoodFountain(12,10));
-		fountains.add(new FoodFountain(13,10));
-		fountains.add(new FoodFountain(14,10));		
+		fountains.add(new FoodFountain(120,100));
+		fountains.add(new FoodFountain(130,100));
+		fountains.add(new FoodFountain(140,100));		
 
 	}
 

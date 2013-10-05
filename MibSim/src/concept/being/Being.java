@@ -26,27 +26,47 @@ public abstract class Being extends Concept{
 		geomap = new GeoMap();
 
 		needs = new ArrayList<Need>();
+		
+		setFrames(3);
+		animaEmX = false;		
+		
 	}
 
 	protected void addNeed(Need need){
-		needs.add(need);	
+		needs.add(need);
 	}
 
 	@Override
 	public void draw(Graphic g){
 
 		g.setColor(colorFill);
-		g.fillOval((x+mapX)*TILE_SIZE, (y+mapY)*TILE_SIZE, w, h);
+		g.fillOval(x+mapX*TILE_SIZE, y+mapY*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 
 		g.setColor(colorDraw);
-		g.drawOval((x+mapX)*TILE_SIZE, (y+mapY)*TILE_SIZE, w, h);
+		g.drawOval(x+mapX*TILE_SIZE, y+mapY*TILE_SIZE, TILE_SIZE, TILE_SIZE);
+
+		if(visible){
+
+			if(opacity<0xff){
+				g.setOpacity(opacity);
+			}
+			
+			this.draw(g, getTransform());
+			
+			g.resetTransform();
+
+			if(opacity<0xff){
+				g.resetOpacity();
+			}
+
+		}
 
 	}
 
 	public void drawInteractionRadius(Graphic g){
 		g.setColor(Color.BLACK);
 		g.setAlpha(70);
-		g.fillCircle((x+mapX)*TILE_SIZE+(TILE_SIZE/2), (y+mapY)*TILE_SIZE+(TILE_SIZE/2), interactionRadius);
+		g.fillCircle(x+mapX*TILE_SIZE+(TILE_SIZE/2), y+mapY*TILE_SIZE+(TILE_SIZE/2), interactionRadius);
 		g.setAlpha(100);
 	}
 
@@ -70,13 +90,6 @@ public abstract class Being extends Concept{
 
 	private void walkTo(int x, int y){
 
-		if(this.x<x){
-			this.x++;
-		}
-		else if(this.x>x){
-			this.x--;
-		}
-
 		if(this.y<y){
 			this.y++;
 		}
@@ -84,6 +97,16 @@ public abstract class Being extends Concept{
 			this.y--;
 		}
 
+		if(this.x<x){
+			this.x++;
+			this.xImage = 1*TILE_SIZE;
+		}
+		else if(this.x>x){
+			this.x--;
+			this.xImage = 3*TILE_SIZE;
+		}
+
+		animate();
 	}
 
 	public GeoMap getGeomap() {
