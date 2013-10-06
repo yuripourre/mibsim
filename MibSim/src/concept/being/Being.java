@@ -39,12 +39,18 @@ public abstract class Being extends Concept{
 	@Override
 	public void draw(Graphic g){
 
+		if(!onMouse){
+			g.setAlpha(60);
+		}else{
+			g.setAlpha(90);
+		}
 		g.setColor(colorFill);
 		g.fillOval(x+mapX*TILE_SIZE, y+mapY*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 
 		g.setColor(colorDraw);
 		g.drawOval(x+mapX*TILE_SIZE, y+mapY*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 
+		g.setAlpha(100);
 		if(visible){
 
 			if(opacity<0xff){

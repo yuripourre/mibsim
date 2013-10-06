@@ -15,6 +15,8 @@ public class BlueCreature extends Being {
 		this.colorFill = SVGColor.DARK_BLUE;
 		
 		this.addNeed(new Need(Nutrient.WATER, 500));
+		
+		this.path = "purplebug.png";
 	}
 
 	
