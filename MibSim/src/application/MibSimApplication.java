@@ -44,6 +44,10 @@ public class MibSimApplication extends Application{
 
 	private List<Concept> fountains = new ArrayList<Concept>();	
 
+	private Being picked;
+	
+	private Being underMouse;	
+	
 	public MibSimApplication(int w, int h) {
 		super(w, h);
 	}
@@ -71,7 +75,7 @@ public class MibSimApplication extends Application{
 			being.getGeomap().add(fountains.get(rand.nextInt(fountains.size())));
 		}
 
-		updateAtFixedRate(700);
+		updateAtFixedRate(500);
 
 		mapX = -mapX;
 		mapY = -mapY;
@@ -95,12 +99,12 @@ public class MibSimApplication extends Application{
 	private void generateFood(){
 
 		fountains.add(new FoodFountain(120,90));
-		fountains.add(new FoodFountain(130,90));
-		fountains.add(new FoodFountain(140,90));
+		fountains.add(new FoodFountain(250,90));
+		fountains.add(new FoodFountain(380,90));
 
-		fountains.add(new FoodFountain(120,100));
-		fountains.add(new FoodFountain(130,100));
-		fountains.add(new FoodFountain(140,100));		
+		fountains.add(new FoodFountain(120,300));
+		fountains.add(new FoodFountain(250,200));
+		fountains.add(new FoodFountain(390,500));		
 
 	}
 
@@ -110,7 +114,11 @@ public class MibSimApplication extends Application{
 		if(!paused){
 
 			for(Being being: beings){
-				being.react();
+				
+				if(picked!=being){
+					being.react();
+				}
+				
 			}
 		}
 	}
@@ -216,17 +224,38 @@ public class MibSimApplication extends Application{
 	
 	@Override
 	public GUIEvent updateMouse(PointerEvent event) {
-		
-		if(event.onButtonDown(MouseButton.MOUSE_BUTTON_LEFT)){
-			
-		}
+				
+		underMouse = null;
 		
 		for(Being being: beings){
 			if(being.onMouse(event)){
 				being.setOnMouse(true);
+				underMouse = being;
 			}else{
 				being.setOnMouse(false);
 			}
+		}
+		
+		if(event.onButtonDown(MouseButton.MOUSE_BUTTON_LEFT)){
+			
+			if(underMouse!=null){
+				picked = underMouse;
+			}else{
+				picked = null;
+			}
+
+		}
+		
+		if(event.onButtonUp(MouseButton.MOUSE_BUTTON_LEFT)){
+			
+			picked = null;			
+
+		}
+		
+		
+		if(picked!=null){
+			picked.setX(event.getX()-TILE_SIZE/2);
+			picked.setY(event.getY()-TILE_SIZE/2);
 		}
 		
 		// TODO Auto-generated method stub

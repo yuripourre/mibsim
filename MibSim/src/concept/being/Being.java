@@ -16,9 +16,11 @@ public abstract class Being extends Concept{
 
 	private List<Need> needs;
 
-	protected int interactionRadius = 42;
+	protected int interactionRadius = 55;
 
 	private GeoMap geomap;
+	
+	protected int walkSpeed = 3;
 
 	public Being(int x, int y) {
 		super(x, y);
@@ -28,7 +30,7 @@ public abstract class Being extends Concept{
 		needs = new ArrayList<Need>();
 		
 		setFrames(3);
-		animaEmX = false;		
+		animaEmX = false;
 		
 	}
 
@@ -46,9 +48,6 @@ public abstract class Being extends Concept{
 		}
 		g.setColor(colorFill);
 		g.fillOval(x+mapX*TILE_SIZE, y+mapY*TILE_SIZE, TILE_SIZE, TILE_SIZE);
-
-		g.setColor(colorDraw);
-		g.drawOval(x+mapX*TILE_SIZE, y+mapY*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 
 		g.setAlpha(100);
 		if(visible){
@@ -97,18 +96,20 @@ public abstract class Being extends Concept{
 	private void walkTo(int x, int y){
 
 		if(this.y<y){
-			this.y++;
+			this.y+=walkSpeed;
+			this.xImage = 2*TILE_SIZE;
 		}
 		else if(this.y>y){
-			this.y--;
+			this.y-=walkSpeed;
+			this.xImage = 0*TILE_SIZE;
 		}
 
 		if(this.x<x){
-			this.x++;
+			this.x+=walkSpeed;
 			this.xImage = 1*TILE_SIZE;
 		}
 		else if(this.x>x){
-			this.x--;
+			this.x-=walkSpeed;
 			this.xImage = 3*TILE_SIZE;
 		}
 

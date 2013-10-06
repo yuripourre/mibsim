@@ -10,7 +10,8 @@ public class BlueCreature extends Being {
 	public BlueCreature(int x, int y) {
 		super(x, y);
 		
-		this.interactionRadius = 20;
+		this.interactionRadius = 28;
+		this.walkSpeed = 8;
 
 		this.colorFill = SVGColor.DARK_BLUE;
 		
