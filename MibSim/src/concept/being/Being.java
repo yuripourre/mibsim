@@ -7,6 +7,7 @@ import java.util.List;
 import map.GeoMap;
 import br.com.etyllica.core.video.Graphic;
 import concept.Concept;
+import concept.Fountain;
 import concept.nutrient.Need;
 import concept.nutrient.Nutrient;
 
@@ -143,6 +144,16 @@ public abstract class Being extends Concept{
 		}
 
 		return false;
+	}
+
+	public void consume(Fountain fountain) {
+
+		for(Need need: needs){
+			if(fountain.have(need.getNutrient())){
+				fountain.drain();
+			}
+		}
+		
 	}
 
 }

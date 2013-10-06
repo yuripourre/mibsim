@@ -10,6 +10,8 @@ public class WaterFountain extends Concept{
 		super(x, y);
 		colorFill = SVGColor.DEEP_SKY_BLUE;
 		nutrients.put(Nutrient.WATER, 100);
+		
+		quantity = 10;
 	}
 	
 }

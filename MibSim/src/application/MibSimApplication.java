@@ -87,12 +87,12 @@ public class MibSimApplication extends Application{
 	private void generateRiver(){
 
 		fountains.add(new WaterFountain(100,30));
-		fountains.add(new WaterFountain(110,30));
-		fountains.add(new WaterFountain(120,30));
-		fountains.add(new WaterFountain(130,30));
-		fountains.add(new WaterFountain(140,30));
-		fountains.add(new WaterFountain(150,30));
-		fountains.add(new WaterFountain(150,50));
+		fountains.add(new WaterFountain(210,30));
+		fountains.add(new WaterFountain(320,30));
+		fountains.add(new WaterFountain(430,30));
+		fountains.add(new WaterFountain(540,30));
+		fountains.add(new WaterFountain(650,30));
+		fountains.add(new WaterFountain(750,50));
 
 	}
 
@@ -117,6 +117,14 @@ public class MibSimApplication extends Application{
 				
 				if(picked!=being){
 					being.react();
+				}
+				
+				for(Fountain fountain: fountains){
+					//Recover Fountain
+					if(being.colideRetangular(fountain)){
+						being.consume(fountain);
+						break;
+					}
 				}
 				
 			}

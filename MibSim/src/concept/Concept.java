@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import br.com.etyllica.core.video.Graphic;
 
-public class Concept extends Fountain{
+public abstract class Concept extends Fountain{
 
 	protected boolean onMouse = false;
 	
@@ -19,6 +19,11 @@ public class Concept extends Fountain{
 	protected Color colorDraw = Color.BLACK;
 	
 	public void draw(Graphic g){
+		
+		if(drained){
+			g.setOpacity(50);
+		}
+		
 		g.setColor(colorFill);
 		g.fillRect(x+mapX*TILE_SIZE, y+mapY*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 		
