@@ -12,7 +12,7 @@ public class RedCreature extends Being {
 
 		colorFill = SVGColor.CRIMSON;
 
-		addNeed(new Need(Nutrient.FOOD, 200));
+		addNeed(new Need(Nutrient.SUGAR, 200));
 		
 		this.path = "redbug.png";
 		

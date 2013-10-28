@@ -3,32 +3,39 @@ package concept;
 import java.awt.Color;
 
 import br.com.etyllica.core.video.Graphic;
+import br.com.etyllica.layer.ImageLayer;
 
 public abstract class Concept extends Fountain{
 
+	private ImageLayer layer;
+	
 	protected boolean onMouse = false;
 	
 	protected int mapX = 0;
 	protected int mapY = 0;
 	
 	public Concept(int x, int y) {
+		super(x,y);
+	}
+	
+	public Concept(int x, int y, String imagePath) {
 		super(x, y);
+		this.layer = new ImageLayer(imagePath);
 	}
 
 	protected Color colorFill = Color.GREEN;
 	protected Color colorDraw = Color.BLACK;
 	
+	@Override
 	public void draw(Graphic g){
 		
 		if(drained){
 			g.setOpacity(50);
 		}
 		
-		g.setColor(colorFill);
-		g.fillRect(x+mapX*TILE_SIZE, y+mapY*TILE_SIZE, TILE_SIZE, TILE_SIZE);
+		layer.setCoordinates(x+mapX*TILE_SIZE, y+mapY*TILE_SIZE);
+		layer.draw(g);
 		
-		g.setColor(colorDraw);
-		g.drawRect(x+mapX*TILE_SIZE, y+mapY*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 	}
 	
 	@Override
@@ -53,7 +60,7 @@ public abstract class Concept extends Fountain{
 		this.onMouse = onMouse;
 
 		if(!onMouse){
-			colorDraw = Color.BLACK;	
+			colorDraw = Color.BLACK;
 		}else{			
 			colorDraw = Color.WHITE;
 		}

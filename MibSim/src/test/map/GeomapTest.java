@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import concept.Concept;
-import concept.nutrient.FoodFountain;
+import concept.nutrient.SugarFountain;
 import concept.nutrient.WaterFountain;
 
 public class GeomapTest {
@@ -43,8 +43,8 @@ public class GeomapTest {
 	public void testGeoMapInsert() {
 		
 		WaterFountain waterFontain = new WaterFountain(20, 30);
-		FoodFountain foodFontain = new FoodFountain(20, 30);
-		FoodFountain anotherFoodFontain = new FoodFountain(21, 30);
+		SugarFountain foodFontain = new SugarFountain(20, 30);
+		SugarFountain anotherFoodFontain = new SugarFountain(21, 30);
 		
 		map.add(waterFontain);
 		map.add(foodFontain);

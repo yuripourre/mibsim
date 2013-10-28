@@ -31,6 +31,7 @@ public abstract class Being extends Concept{
 		needs = new ArrayList<Need>();
 		
 		setFrames(3);
+		
 		animaEmX = false;
 		
 	}
@@ -47,10 +48,12 @@ public abstract class Being extends Concept{
 		}else{
 			g.setAlpha(90);
 		}
+		
 		g.setColor(colorFill);
 		g.fillOval(x+mapX*TILE_SIZE, y+mapY*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 
 		g.setAlpha(100);
+		
 		if(visible){
 
 			if(opacity<0xff){

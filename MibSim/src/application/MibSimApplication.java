@@ -12,31 +12,37 @@ import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.input.mouse.MouseButton;
 import br.com.etyllica.core.video.Graphic;
+import br.com.etyllica.layer.ImageLayer;
 import concept.Concept;
 import concept.Fountain;
 import concept.being.Being;
 import concept.being.creature.BlueCreature;
 import concept.being.creature.RedCreature;
 import concept.being.creature.YellowCreature;
-import concept.nutrient.FoodFountain;
+import concept.nutrient.AdamantiteFountain;
+import concept.nutrient.SugarFountain;
 import concept.nutrient.WaterFountain;
 
 public class MibSimApplication extends Application{
 
+	private ImageLayer sand;
+
 	private final int MAP_WIDTH = 800;
 	private final int MAP_HEIGHT = 800;
-	
+
 	private int mapX = 0;
 	private int mapY = 0;
 
 	private int width = 60;
 	private int height = 60;
-	
+
 	private int TILE_SIZE = Fountain.TILE_SIZE;
-	
+
 	private boolean drawRadius = true;
-	
-	private boolean paused = false; 
+
+	private boolean paused = false;
+
+	private boolean grid = true;
 
 	private List<Being> beings;
 
@@ -45,9 +51,9 @@ public class MibSimApplication extends Application{
 	private List<Concept> fountains = new ArrayList<Concept>();	
 
 	private Being picked;
-	
+
 	private Being underMouse;	
-	
+
 	public MibSimApplication(int w, int h) {
 		super(w, h);
 	}
@@ -75,12 +81,14 @@ public class MibSimApplication extends Application{
 			being.getGeomap().add(fountains.get(rand.nextInt(fountains.size())));
 		}
 
+		sand = new ImageLayer("sand.png");
+
 		updateAtFixedRate(500);
 
 		mapX = -mapX;
 		mapY = -mapY;
 		offsetMap();
-		
+
 		loading = 100;
 	}
 
@@ -98,13 +106,17 @@ public class MibSimApplication extends Application{
 
 	private void generateFood(){
 
-		fountains.add(new FoodFountain(120,90));
-		fountains.add(new FoodFountain(250,90));
-		fountains.add(new FoodFountain(380,90));
+		fountains.add(new SugarFountain(120,90));
+		fountains.add(new SugarFountain(250,90));
+		fountains.add(new SugarFountain(380,90));
 
-		fountains.add(new FoodFountain(120,300));
-		fountains.add(new FoodFountain(250,200));
-		fountains.add(new FoodFountain(390,500));		
+		fountains.add(new SugarFountain(120,300));
+		fountains.add(new SugarFountain(250,200));
+		fountains.add(new SugarFountain(390,500));		
+		
+		fountains.add(new AdamantiteFountain(200,520));
+		fountains.add(new AdamantiteFountain(250,490));
+		fountains.add(new AdamantiteFountain(310,590));
 
 	}
 
@@ -114,11 +126,11 @@ public class MibSimApplication extends Application{
 		if(!paused){
 
 			for(Being being: beings){
-				
+
 				if(picked!=being){
 					being.react();
 				}
-				
+
 				for(Fountain fountain: fountains){
 					//Recover Fountain
 					if(being.colideRetangular(fountain)){
@@ -126,7 +138,7 @@ public class MibSimApplication extends Application{
 						break;
 					}
 				}
-				
+
 			}
 		}
 	}
@@ -137,14 +149,18 @@ public class MibSimApplication extends Application{
 		g.setColor(Color.GREEN);
 		for(int j=0;j<height;j++){
 			for(int i=0;i<width;i++){
-				g.fillRect(i*TILE_SIZE, j*TILE_SIZE, TILE_SIZE, TILE_SIZE);
+				sand.setCoordinates(i*TILE_SIZE, j*TILE_SIZE);
+				sand.draw(g);
+				//g.fillRect(i*TILE_SIZE, j*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 			}
 		}
 
-		g.setColor(Color.BLACK);
-		for(int j=0;j<height;j++){
-			for(int i=0;i<width;i++){			
-				g.drawRect(i*TILE_SIZE, j*TILE_SIZE, TILE_SIZE, TILE_SIZE);
+		if(grid){
+			g.setColor(Color.BLACK);
+			for(int j=0;j<height;j++){
+				for(int i=0;i<width;i++){			
+					g.drawRect(i*TILE_SIZE, j*TILE_SIZE, TILE_SIZE, TILE_SIZE);
+				}
 			}
 		}
 
@@ -171,70 +187,74 @@ public class MibSimApplication extends Application{
 	@Override
 	public GUIEvent updateKeyboard(KeyEvent event) {
 
-		if(event.onKeyDown(KeyEvent.TSK_SETA_DIREITA)){
+		if(event.isKeyDown(KeyEvent.TSK_SETA_DIREITA)){
 			//if(mapX>0){
-				mapX--;
-				offsetMap();
+			mapX--;
+			offsetMap();
 			//}			
 		}
-		
-		if(event.onKeyDown(KeyEvent.TSK_SETA_ESQUERDA)){
+
+		if(event.isKeyDown(KeyEvent.TSK_SETA_ESQUERDA)){
 			//if(mapX<MAP_WIDTH){
-				mapX++;
-				offsetMap();
+			mapX++;
+			offsetMap();
 			//}
-			
+
 		}
-		
-		if(event.onKeyDown(KeyEvent.TSK_SETA_BAIXO)){
+
+		if(event.isKeyDown(KeyEvent.TSK_SETA_BAIXO)){
 			//if(mapY>0){
-				mapY--;
-				offsetMap();
+			mapY--;
+			offsetMap();
 			//}
-			
+
 		}
-		
-		if(event.onKeyDown(KeyEvent.TSK_SETA_CIMA)){
+
+		if(event.isKeyDown(KeyEvent.TSK_SETA_CIMA)){
 			//if(mapY<MAP_HEIGHT){
-				mapY++;
-				offsetMap();
+			mapY++;
+			offsetMap();
 			//}
-			
+
 		}
-		
-		if(event.onKeyDown(KeyEvent.TSK_H)){
+
+		if(event.isKeyDown(KeyEvent.TSK_H)){
 			drawRadius = !drawRadius;
 		}
-		
-		if(event.onKeyDown(KeyEvent.TSK_P)){
+
+		if(event.isKeyDown(KeyEvent.TSK_P)){
 			paused = !paused;
+		}
+		
+		if(event.isKeyDown(KeyEvent.TSK_G)){
+			grid = !grid;
 		}
 
 		return null;
 	}
-	
+
 	private void offsetMap(){
-		
+
 		for(Being being: beings){
 			being.setMapX(mapX);
 			being.setMapY(mapY);
 		}
-		
+
 		for(Concept fountain: fountains){
 			fountain.setMapX(mapX);
 			fountain.setMapY(mapY);
 		}
-		
+
 	}
 
 	int dragX = 0;
 	int dragY = 0;
-	
+
 	@Override
 	public GUIEvent updateMouse(PointerEvent event) {
-				
+
 		underMouse = null;
-		
+
 		for(Being being: beings){
 			if(being.onMouse(event)){
 				being.setOnMouse(true);
@@ -243,9 +263,9 @@ public class MibSimApplication extends Application{
 				being.setOnMouse(false);
 			}
 		}
-		
+
 		if(event.onButtonDown(MouseButton.MOUSE_BUTTON_LEFT)){
-			
+
 			if(underMouse!=null){
 				picked = underMouse;
 			}else{
@@ -253,19 +273,19 @@ public class MibSimApplication extends Application{
 			}
 
 		}
-		
+
 		if(event.onButtonUp(MouseButton.MOUSE_BUTTON_LEFT)){
-			
+
 			picked = null;			
 
 		}
-		
-		
+
+
 		if(picked!=null){
 			picked.setX(event.getX()-TILE_SIZE/2);
 			picked.setY(event.getY()-TILE_SIZE/2);
 		}
-		
+
 		// TODO Auto-generated method stub
 		return null;
 	}

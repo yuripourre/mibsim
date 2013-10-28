@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.etyllica.core.DrawableComponent;
+import br.com.etyllica.core.Drawable;
 import br.com.etyllica.core.video.Graphic;
 import concept.Concept;
 import concept.nutrient.Nutrient;
 
-public class GeoMap implements DrawableComponent{
+public class GeoMap implements Drawable{
 		
 	private Map<Integer, Map<Integer,List<Concept>>> map;
 	
