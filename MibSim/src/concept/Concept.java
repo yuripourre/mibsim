@@ -42,10 +42,10 @@ public abstract class Concept extends Fountain{
 	public boolean onMouse(int mx, int my) {
 
 		if(mx + 1 < x+mapX*TILE_SIZE)	return false;
-		if(mx > x+mapX*TILE_SIZE + xTile)	return false;
+		if(mx > x+mapX*TILE_SIZE + tileW)	return false;
 
 		if(my + 1 < y+mapY*TILE_SIZE)	return false;
-		if(my > y+mapY*TILE_SIZE + yTile)	return false;
+		if(my > y+mapY*TILE_SIZE + tileH)	return false;
 
 		return true;
 

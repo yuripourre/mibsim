@@ -1,8 +1,9 @@
 import application.MibSimApplication;
 import br.com.etyllica.Etyllica;
+import br.com.etyllica.context.Application;
 
 
-public class Simulator extends Etyllica{
+public class Simulator extends Etyllica {
 
 	private static final long serialVersionUID = 1L;
 
@@ -11,9 +12,9 @@ public class Simulator extends Etyllica{
 	}
 
 	@Override
-	public void startGame() {
+	public Application startApplication() {
 
-		setMainApplication(new MibSimApplication(w, h));
+		return new MibSimApplication(w, h);
 		
 	}
 

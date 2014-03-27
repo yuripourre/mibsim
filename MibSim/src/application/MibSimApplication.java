@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import map.GeoMap;
-import br.com.etyllica.core.application.Application;
+import br.com.etyllica.context.Application;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
@@ -121,7 +121,7 @@ public class MibSimApplication extends Application{
 	}
 
 	@Override
-	public void timeUpdate(){
+	public void timeUpdate(long now) {
 
 		if(!paused){
 
