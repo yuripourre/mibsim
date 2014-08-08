@@ -6,15 +6,14 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import map.GeoMap;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import concept.Concept;
-import concept.nutrient.SugarFountain;
-import concept.nutrient.WaterFountain;
+import br.com.mibsim.model.fountain.Fountain;
+import br.com.mibsim.model.fountain.SugarFountain;
+import br.com.mibsim.model.fountain.WaterFountain;
+import br.com.mibsim.model.map.GeoMap;
 
 public class GeomapTest {
 	
@@ -23,8 +22,7 @@ public class GeomapTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		map = new GeoMap();
-		
+		map = new GeoMap();		
 	}
 
 	@After
@@ -34,7 +32,7 @@ public class GeomapTest {
 
 	@Test
 	public void testGeoMapEmpty() {
-		List<Concept> found = map.get(20, 30);
+		List<Fountain> found = map.get(20, 30);
 		
 		assertEquals(0, found.size());
 	}
@@ -50,7 +48,7 @@ public class GeomapTest {
 		map.add(foodFontain);
 		map.add(anotherFoodFontain);
 		
-		List<Concept> found = map.get(20, 30);
+		List<Fountain> found = map.get(20, 30);
 		
 		assertEquals(2, found.size());
 		assertTrue(found.contains(waterFontain));

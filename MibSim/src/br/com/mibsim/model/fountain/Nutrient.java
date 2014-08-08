@@ -1,4 +1,4 @@
-package concept.nutrient;
+package br.com.mibsim.model.fountain;
 
 public enum Nutrient {
 

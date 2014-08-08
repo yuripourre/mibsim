@@ -7,10 +7,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import concept.being.creature.RedCreature;
-import concept.nutrient.SugarFountain;
-import concept.nutrient.Nutrient;
-import concept.nutrient.WaterFountain;
+import br.com.mibsim.model.beign.creature.RedCreature;
+import br.com.mibsim.model.fountain.Nutrient;
+import br.com.mibsim.model.fountain.SugarFountain;
+import br.com.mibsim.model.fountain.WaterFountain;
 
 public class RedCreatureTest {
 
