@@ -123,7 +123,6 @@ public class MibSimApplication extends Application {
 
 	private void drawGeoMap(Graphic g) {
 
-
 		Map<Integer, Map<Integer,List<Fountain>>> map = geoMap.getMap();
 
 		for(Map<Integer,List<Fountain>> xMap: map.values()) {
@@ -131,7 +130,7 @@ public class MibSimApplication extends Application {
 			for(List<Fountain> concepts: xMap.values()) {
 
 				for(Fountain concept: concepts){
-					concept.draw(g);
+					//concept.draw(g);
 				}
 			}			
 		}

@@ -25,7 +25,7 @@ public class BeingDrawer implements BeingListener {
 		
 		layer.setFrames(3);
 		
-		layer.setAnimaEmX(false);		
+		layer.setAnimateHorizontally(false);		
 	}
 
 	public Being getBeing() {
