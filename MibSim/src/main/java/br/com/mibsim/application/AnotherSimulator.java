@@ -40,15 +40,16 @@ public class AnotherSimulator extends Application {
 
 	@Override
 	public void load() {
-				
-		//bug = new BlueLurker(100, 200);
-		//bug = new GreenUltralisk(100, 200);
-		bug = new RedHydralisk(100, 200);
-				
-		generateRandomCreatures();
 		
 		basement = new RedBasement(300, 300);
 		
+		//bug = new BlueLurker(100, 200);
+		//bug = new GreenUltralisk(100, 200);		
+		
+		bug = new RedHydralisk(100, 200, basement);
+				
+		generateRandomCreatures();
+				
 		controller = new EasyController(bug);
 		
 		try {
@@ -74,7 +75,7 @@ public class AnotherSimulator extends Application {
 			int x = random.nextInt(w);
 			int y = random.nextInt(h);
 			
-			Specie bug = new RedHydralisk(x, y);
+			Specie bug = new RedHydralisk(x, y, basement);
 			
 			System.out.println("Generate bug at: "+x+" "+y);
 			
@@ -90,6 +91,11 @@ public class AnotherSimulator extends Application {
 	@Override
 	public void timeUpdate(long now) {		
 		bug.update(now);
+		
+		for(Specie bug: bugs) {
+			bug.update(now);
+		}
+		
 	}
 	
 	@Override
