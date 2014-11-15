@@ -14,7 +14,7 @@ import br.com.mibsim.planning.PlanningTask;
 import br.com.tide.action.player.ActionPlayer;
 
 public class Specie extends ActionPlayer implements Drawable {
-	
+		
 	protected AnimatedLayer layer;
 	
 	protected Basement basement;
@@ -53,16 +53,24 @@ public class Specie extends ActionPlayer implements Drawable {
 		if(isTurning()) {
 			layer.setAngle(angle);
 		}
-				
+			
 	}
 	
 	private void act() {
 				
 		PlanningTask currentTask = currentTask();
 		
+		PointInt2D target = currentTask.getTarget();
+		
 		if(currentTask != lastTask) {
 			lastTask = currentTask;
-			turnToTarget(currentTask.getTarget());			
+			turnToTarget(target);
+		}
+		
+		if(!reachTarget(target)) {
+			walkForward();
+		} else {
+			stopWalk();
 		}
 		
 	}
@@ -73,10 +81,22 @@ public class Specie extends ActionPlayer implements Drawable {
 		int cy = layer.getY()+layer.utilHeight()/2;
 		
 		double angle = Point2D.angle(cx, cy, target.getX(), target.getY());
-		//Compensate sprite rotation
-		angle += 90;		
 		
-		layer.setAngle(angle);
+		this.setStartAngle(angle+90);
+		
+		//Compensate sprite rotation
+		layer.setAngle(angle+90);
+		
+	}
+	
+	private boolean reachTarget(PointInt2D target) {
+		
+		int cx = layer.getX()+layer.utilWidth()/2;
+		int cy = layer.getY()+layer.utilHeight()/2;
+		
+		double distance = Point2D.distance(cx, cy, target.getX(), target.getY());
+				
+		return distance < 10;		
 	}
 	
 	private PlanningTask currentTask() {
@@ -93,7 +113,7 @@ public class Specie extends ActionPlayer implements Drawable {
 
 	@Override
 	public void draw(Graphic g) {
-		layer.draw(g);
+		layer.draw(g);		
 	}
 	
 }
