@@ -106,6 +106,7 @@ public class AnotherSimulator extends Application {
 		
 		for(Specie bug: bugs) {
 			bug.draw(g);
+			bug.drawHealthBar(g);
 		}
 	}
 
