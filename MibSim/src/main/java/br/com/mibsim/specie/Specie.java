@@ -7,10 +7,14 @@ import java.util.List;
 import br.com.etyllica.core.Drawable;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.graphics.SVGColor;
+import br.com.etyllica.effects.Effect;
 import br.com.etyllica.layer.AnimatedLayer;
+import br.com.etyllica.layer.ImageLayer;
+import br.com.etyllica.layer.Layer;
 import br.com.etyllica.linear.Point2D;
 import br.com.etyllica.linear.PointInt2D;
 import br.com.mibsim.building.basement.Basement;
+import br.com.mibsim.fx.Dialog;
 import br.com.mibsim.planning.PlanningAction;
 import br.com.mibsim.planning.PlanningTask;
 import br.com.tide.action.player.ActionPlayer;
@@ -26,13 +30,17 @@ public class Specie extends ActionPlayer implements Drawable {
 	protected int turnEnergy = 1;
 	
 	protected boolean dead = false;
+	protected boolean hungry = false;
 
 	protected AnimatedLayer layer;
-
+	protected ImageLayer deadLayer;
+	
+	private Dialog dialog = new Dialog();
+	
 	protected Basement basement;
 
 	private PlanningTask lastTask;
-
+	
 	protected List<PlanningTask> tasks = new ArrayList<PlanningTask>();
 
 	public Specie(int x, int y, int tileW, int tileH, String path, Basement basement) {
@@ -72,7 +80,15 @@ public class Specie extends ActionPlayer implements Drawable {
 		loseEnergy(breathEnergy);
 		
 		if(currentHealth <= 0) {
-			die(now);
+			die(now);			
+		}
+		
+		if(!hungry) {
+			if(isHungry()) {
+				hungry = true;
+				dialog.showHungryDialog();
+			}
+			
 		}
 
 	}
@@ -80,10 +96,14 @@ public class Specie extends ActionPlayer implements Drawable {
 	private void walk(long now) {
 		layer.animate(now);
 		layer.setCoordinates(x, y);
+		
+		dialog.setCoordinates(x, y);
 	}
 	
 	private void die(long now) {
 		dead = true;
+		
+		deadLayer.centralize(layer);
 	}
 
 	private void loseEnergy(int energy) {
@@ -109,12 +129,19 @@ public class Specie extends ActionPlayer implements Drawable {
 
 		} else {
 			stopWalk();
+			completeTask(currentTask);
 		}
 
 	}
+	
+	private void completeTask(PlanningTask task) {
+		if(task.getAction() == PlanningAction.REPORT) {
+			
+		}
+	}
 
 	private boolean isHungry() {
-		return health<20;
+		return currentHealth<hungryLimiar;
 	}
 
 	private void turnToTarget(PointInt2D target) {
@@ -155,7 +182,13 @@ public class Specie extends ActionPlayer implements Drawable {
 
 	@Override
 	public void draw(Graphic g) {
-		layer.draw(g);		
+		
+		if(!dead) {
+			layer.draw(g);
+			dialog.draw(g);
+		} else {
+			deadLayer.draw(g);
+		}
 	}
 
 	public void drawHealthBar(Graphic g) {
@@ -174,7 +207,7 @@ public class Specie extends ActionPlayer implements Drawable {
 	}
 	
 	private Color healthColor() {
-		if(currentHealth<hungryLimiar)
+		if(isHungry())
 			return Color.RED;
 		
 		return SVGColor.LIME_GREEN;

@@ -12,6 +12,7 @@ import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.mibsim.building.basement.Basement;
 import br.com.mibsim.building.basement.BlueBasement;
+import br.com.mibsim.building.basement.GreenBasement;
 import br.com.mibsim.building.basement.RedBasement;
 import br.com.mibsim.specie.BlueLurker;
 import br.com.mibsim.specie.GreenUltralisk;
@@ -30,7 +31,8 @@ public class AnotherSimulator extends Application {
 	
 	private Map map;
 	
-	private Basement basement;
+	private RedBasement redBasement;
+	private GreenBasement greenBasement;
 	
 	private boolean paused = false; 
 	
@@ -43,12 +45,13 @@ public class AnotherSimulator extends Application {
 	@Override
 	public void load() {
 		
-		basement = new RedBasement(300, 300);
+		redBasement = new RedBasement(300, 300);
+		greenBasement = new GreenBasement(450, 100);
 		
 		//bug = new BlueLurker(100, 200);
 		//bug = new GreenUltralisk(100, 200);		
 		
-		bug = new RedHydralisk(100, 200, basement);
+		bug = new RedHydralisk(100, 200, redBasement);
 				
 		generateRandomCreatures();
 				
@@ -77,10 +80,8 @@ public class AnotherSimulator extends Application {
 			int x = random.nextInt(w);
 			int y = random.nextInt(h);
 			
-			Specie bug = new RedHydralisk(x, y, basement);
-			
-			System.out.println("Generate bug at: "+x+" "+y);
-			
+			Specie bug = new RedHydralisk(x, y, redBasement);
+						
 			float angle = random.nextInt(360);
 			
 			bug.setStartAngle(angle);
@@ -89,7 +90,7 @@ public class AnotherSimulator extends Application {
 			
 		}
 	}
-	
+		
 	@Override
 	public void timeUpdate(long now) {
 		
@@ -108,12 +109,14 @@ public class AnotherSimulator extends Application {
 	public void draw(Graphic g) {
 		map.draw(g);
 		bug.draw(g);
-		basement.draw(g);
 		
 		for(Specie bug: bugs) {
 			bug.draw(g);
 			bug.drawHealthBar(g);
 		}
+		
+		redBasement.draw(g);
+		greenBasement.draw(g);
 	}
 
 	@Override
