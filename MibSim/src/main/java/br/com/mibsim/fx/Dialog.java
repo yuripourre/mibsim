@@ -33,6 +33,8 @@ public class Dialog implements Drawable, OnAnimationFinishListener {
 		
 		hungryLabel = new StaticLayer("ui/hamburger.png");
 		exploreLabel = new StaticLayer("ui/map.png");
+		reportLabel = new StaticLayer("ui/sheet.png");
+		cannibalLabel = new StaticLayer("ui/evil.png");
 		
 		label = new ImageLayer();
 		label.cloneLayer(hungryLabel);
@@ -45,6 +47,16 @@ public class Dialog implements Drawable, OnAnimationFinishListener {
 	
 	public void showExploreDialog() {
 		label.cloneLayer(exploreLabel);
+		showDialog();
+	}
+	
+	public void showCannibalDialog() {
+		label.cloneLayer(cannibalLabel);
+		showDialog();
+	}
+	
+	public void showReportDialog() {
+		label.cloneLayer(reportLabel);
 		showDialog();
 	}
 	

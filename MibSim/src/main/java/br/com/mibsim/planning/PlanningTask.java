@@ -8,6 +8,8 @@ public class PlanningTask {
 	
 	private PlanningAction action;
 	
+	private boolean completed = false;
+	
 	public PlanningTask(PlanningAction action, PointInt2D target) {
 		super();
 		this.action = action;
@@ -21,5 +23,13 @@ public class PlanningTask {
 	public PointInt2D getTarget() {
 		return target;
 	}
-	
+
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
+		
 }

@@ -129,14 +129,18 @@ public class Specie extends ActionPlayer implements Drawable {
 
 		} else {
 			stopWalk();
-			completeTask(currentTask);
+			
+			if(!currentTask.isCompleted()) {
+				completeTask(currentTask);
+				currentTask.setCompleted(true);
+			}
 		}
 
 	}
 	
 	private void completeTask(PlanningTask task) {
 		if(task.getAction() == PlanningAction.REPORT) {
-			
+			dialog.showReportDialog();
 		}
 	}
 
