@@ -32,6 +32,8 @@ public class AnotherSimulator extends Application {
 	
 	private Basement basement;
 	
+	private boolean paused = false; 
+	
 	private List<Specie> bugs = new ArrayList<Specie>();
 	
 	public AnotherSimulator(int w, int h) {
@@ -89,7 +91,11 @@ public class AnotherSimulator extends Application {
 	}
 	
 	@Override
-	public void timeUpdate(long now) {		
+	public void timeUpdate(long now) {
+		
+		if(paused)
+			return;
+		
 		bug.update(now);
 		
 		for(Specie bug: bugs) {
@@ -120,6 +126,10 @@ public class AnotherSimulator extends Application {
 	public GUIEvent updateKeyboard(KeyEvent event) {
 		
 		controller.handleEvent(event);
+		
+		if(event.isKeyDown(KeyEvent.TSK_SPACE)) {
+			paused = !paused;
+		}
 		
 		return null;
 	}
