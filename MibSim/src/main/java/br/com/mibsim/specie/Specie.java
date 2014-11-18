@@ -21,12 +21,13 @@ import br.com.tide.action.player.ActionPlayer;
 
 public class Specie extends ActionPlayer implements Drawable {
 
-	protected int health = 1000;
+	protected int health = 10000;
 	protected int currentHealth = health;
 	protected int hungryLimiar = health/3;
 
 	protected int walkEnergy = 10;
-	protected int breathEnergy = 2;
+	protected int reportEnergy = 5;
+	protected int breathEnergy = 2;	
 	protected int turnEnergy = 1;
 	
 	protected boolean dead = false;

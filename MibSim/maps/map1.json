@@ -1,8 +1,8 @@
 {
   "version": 1,
   "type": "ORTHOGONAL",
-  "columns": 25,
-  "lines": 18,
+  "columns": 320,
+  "lines": 320,
   "tile_width": 32,
   "tile_height": 32,
   "tilesets": [
@@ -144,6 +144,16 @@
     },
     {
       "x": 24,
+      "y": 0,
+      "floor_id": 0
+    },
+    {
+      "x": 25,
+      "y": 0,
+      "floor_id": 0
+    },
+    {
+      "x": 26,
       "y": 0,
       "floor_id": 0
     },

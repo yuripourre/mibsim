@@ -9,7 +9,7 @@ public class BlueLurker extends Specie {
 	public BlueLurker(int x, int y, Basement basement) {
 		super(x, y, 66, 64, "blue_lurker.png", basement);
 				
-		layer.setFrames(10);
+		layer.setFrames(7);
 		
 		deadLayer = new ImageLayer("blue_lurker_dead.png");
 	}

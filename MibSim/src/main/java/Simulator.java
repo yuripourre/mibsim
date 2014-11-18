@@ -1,10 +1,7 @@
-import application.MibSimApplication;
-import application.OriginalApplication;
 import br.com.etyllica.Etyllica;
 import br.com.etyllica.context.Application;
 import br.com.etyllica.util.PathHelper;
 import br.com.mibsim.application.AnotherSimulator;
-import br.com.mibsim.editor.MibSimMapEditor;
 
 
 public class Simulator extends Etyllica {

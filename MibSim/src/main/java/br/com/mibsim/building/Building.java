@@ -27,12 +27,12 @@ public class Building extends GeometricLayer implements Drawable {
 
 	@Override
 	public void draw(Graphic g) {
-		g.setAlpha(50);
+		//g.setAlpha(50);
 		layer.draw(g);
 		
-		g.setColor(Color.RED);
+		/*g.setColor(Color.RED);
 		g.fillRect(this);
-		g.resetOpacity();
+		g.resetOpacity();*/
 	}
 
 	public PointInt2D getCenter() {
@@ -42,5 +42,5 @@ public class Building extends GeometricLayer implements Drawable {
 	public void setCenter(PointInt2D center) {
 		this.center = center;
 	}
-		
+	
 }
