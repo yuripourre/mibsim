@@ -7,10 +7,8 @@ import java.util.List;
 import br.com.etyllica.core.Drawable;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.graphics.SVGColor;
-import br.com.etyllica.effects.Effect;
 import br.com.etyllica.layer.AnimatedLayer;
 import br.com.etyllica.layer.ImageLayer;
-import br.com.etyllica.layer.Layer;
 import br.com.etyllica.linear.Point2D;
 import br.com.etyllica.linear.PointInt2D;
 import br.com.mibsim.building.basement.Basement;
@@ -24,10 +22,11 @@ public class Specie extends ActionPlayer implements Drawable {
 	protected int health = 10000;
 	protected int currentHealth = health;
 	protected int hungryLimiar = health/3;
+	protected int metabolism = 2;
 
-	protected int walkEnergy = 10;
-	protected int reportEnergy = 5;
-	protected int breathEnergy = 2;	
+	protected int breathEnergy = 1;
+	protected int walkEnergy = 5;
+	protected int reportEnergy = 10;
 	protected int turnEnergy = 1;
 	
 	protected boolean dead = false;
@@ -108,7 +107,7 @@ public class Specie extends ActionPlayer implements Drawable {
 	}
 
 	private void loseEnergy(int energy) {
-		currentHealth -= energy;
+		currentHealth -= energy*metabolism;
 	}
 
 	private void act() {
