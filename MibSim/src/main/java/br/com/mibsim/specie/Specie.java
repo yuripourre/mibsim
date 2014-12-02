@@ -28,6 +28,7 @@ public class Specie extends ActionPlayer implements Drawable {
 	protected int walkEnergy = 5;
 	protected int reportEnergy = 10;
 	protected int turnEnergy = 1;
+	protected int sensorRadius = 100;
 	
 	protected boolean dead = false;
 	protected boolean hungry = false;
@@ -189,10 +190,17 @@ public class Specie extends ActionPlayer implements Drawable {
 		
 		if(!dead) {
 			layer.draw(g);
-			dialog.draw(g);
+			dialog.draw(g);			
 		} else {
 			deadLayer.draw(g);
 		}
+	}
+	
+	public void drawSensors(Graphic g) {
+		g.setColor(Color.BLACK);
+		g.setAlpha(50);
+		g.fillCircle(layer.getX()+layer.utilWidth()/2, layer.getY()+layer.utilHeight()/2, sensorRadius);
+		g.resetOpacity();
 	}
 
 	public void drawHealthBar(Graphic g) {

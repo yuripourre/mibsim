@@ -26,7 +26,7 @@ import br.com.vite.export.MapExporter;
 public class AnotherSimulator extends Application {
 
 	private Camera extendedCamera;
-	
+
 	private Controller controller;
 
 	private Specie bug;
@@ -47,7 +47,7 @@ public class AnotherSimulator extends Application {
 
 	@Override
 	public void load() {
-		
+
 		redBasement = new RedBasement(320, 32*10);
 		greenBasement = new GreenBasement(32*20, 32*3);
 		blueBasement = new BlueBasement(32*15, 32*3);
@@ -68,7 +68,7 @@ public class AnotherSimulator extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		//extendedCamera = new Camera(0, 0, map.getColumns()*map.getTileWidth(), map.getLines()*map.getTileHeight());
 		extendedCamera = new Camera(0, 0, w*2, h*2);
 
@@ -122,18 +122,23 @@ public class AnotherSimulator extends Application {
 	}
 
 	int cx = 0;
-	
+
 	@Override
 	public void draw(Graphic g) {
-		
+
 		g.setCamera(extendedCamera);
-		
+
 		//map.draw(g);
 		map.getMap().draw(g, 0, 0, 32, 28);
+		bug.drawSensors(g);
 		bug.draw(g);
 		bug.drawHealthBar(g);
 
 		for(Specie bug: bugs) {
+			bug.drawSensors(g);
+		}
+		
+		for(Specie bug: bugs) {	
 			bug.draw(g);
 			bug.drawHealthBar(g);
 		}
@@ -141,7 +146,7 @@ public class AnotherSimulator extends Application {
 		redBasement.draw(g);
 		greenBasement.draw(g);
 		blueBasement.draw(g);
-		
+
 		g.resetCamera(extendedCamera);
 		extendedCamera.draw(g);
 	}
@@ -156,19 +161,19 @@ public class AnotherSimulator extends Application {
 	public GUIEvent updateKeyboard(KeyEvent event) {
 
 		controller.handleEvent(event);
-		
+
 		if(event.isKeyDown(KeyEvent.TSK_RIGHT_ARROW)) {
 			translate(20, 0);
 		}
-		
+
 		if(event.isKeyDown(KeyEvent.TSK_LEFT_ARROW)) {
 			translate(-20, 0);
 		}
-		
+
 		if(event.isKeyDown(KeyEvent.TSK_UP_ARROW)) {
 			translate(0, -20);
 		}
-		
+
 		if(event.isKeyDown(KeyEvent.TSK_DOWN_ARROW)) {
 			translate(0, 20);
 		}
@@ -179,12 +184,12 @@ public class AnotherSimulator extends Application {
 
 		return null;
 	}
-	
+
 	public void translate(int x, int y) {
-		
+
 		extendedCamera.setAimX(extendedCamera.getAimX()+x);
 		extendedCamera.setAimY(extendedCamera.getAimY()+y);
-		
+
 	}
 
 }
