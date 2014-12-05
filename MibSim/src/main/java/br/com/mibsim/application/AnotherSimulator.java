@@ -5,15 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import br.com.etyllica.cinematics.Camera;
 import br.com.etyllica.context.Application;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
+import br.com.etyllica.layer.ImageLayer;
 import br.com.mibsim.building.basement.BlueBasement;
 import br.com.mibsim.building.basement.GreenBasement;
 import br.com.mibsim.building.basement.RedBasement;
+import br.com.mibsim.editor.WraparoundGrid;
 import br.com.mibsim.specie.BlueLurker;
 import br.com.mibsim.specie.GreenUltralisk;
 import br.com.mibsim.specie.RedHydralisk;
@@ -24,8 +25,6 @@ import br.com.vite.editor.MapEditor;
 import br.com.vite.export.MapExporter;
 
 public class AnotherSimulator extends Application {
-
-	private Camera extendedCamera;
 
 	private Controller controller;
 
@@ -40,6 +39,8 @@ public class AnotherSimulator extends Application {
 	private boolean paused = false;
 
 	private List<Specie> bugs = new ArrayList<Specie>();
+	
+	private WraparoundGrid floor;
 
 	public AnotherSimulator(int w, int h) {
 		super(w, h);
@@ -56,8 +57,9 @@ public class AnotherSimulator extends Application {
 		//bug = new GreenUltralisk(100, 200);		
 
 		bug = new RedHydralisk(100, 200, redBasement);
-
-		generateRandomCreatures();
+		bugs.add(bug);
+		
+		generateRandomCreatures();		
 
 		controller = new EasyController(bug);
 
@@ -68,9 +70,11 @@ public class AnotherSimulator extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		//extendedCamera = new Camera(0, 0, map.getColumns()*map.getTileWidth(), map.getLines()*map.getTileHeight());
-		extendedCamera = new Camera(0, 0, w*2, h*2);
+		
+		ImageLayer tile = new ImageLayer(0, 0, 32, 32,"tiles/tileset.png");
+		tile.setImageCoordinates(0, 32);
+		
+		floor = new WraparoundGrid(w, h, tile);
 
 		updateAtFixedRate(50);
 
@@ -79,11 +83,14 @@ public class AnotherSimulator extends Application {
 
 	private void generateRandomCreatures() {
 
+		//int quantity = 10*10;
+		int quantity = 40;
+		
 		System.out.println("Generate Creatures!");
 
 		Random random = new Random();
 
-		for(int i = 0; i < 10*10; i++) {
+		for(int i = 0; i < quantity; i++) {
 
 			int x = random.nextInt(w*2);
 			int y = random.nextInt(h*2);
@@ -113,8 +120,6 @@ public class AnotherSimulator extends Application {
 		if(paused)
 			return;
 
-		bug.update(now);
-
 		for(Specie bug: bugs) {
 			bug.update(now);
 		}
@@ -122,33 +127,34 @@ public class AnotherSimulator extends Application {
 	}
 
 	int cx = 0;
+	
+	int offsetX = 0;
+	int offsetY = 0;
 
 	@Override
 	public void draw(Graphic g) {
 
-		g.setCamera(extendedCamera);
+		//g.setCamera(extendedCamera);
 
 		//map.draw(g);
-		map.getMap().draw(g, 0, 0, 32, 28);
-		bug.drawSensors(g);
-		bug.draw(g);
-		bug.drawHealthBar(g);
+		//map.getMap().draw(g, 0, 0, 32, 28);
+		floor.draw(g);
 
 		for(Specie bug: bugs) {
-			bug.drawSensors(g);
+			bug.drawSensors(g, offsetX, offsetY);
 		}
 		
 		for(Specie bug: bugs) {	
-			bug.draw(g);
-			bug.drawHealthBar(g);
+			bug.draw(g, offsetX, offsetY);
+			bug.drawHealthBar(g, offsetX, offsetY);
 		}
 
-		redBasement.draw(g);
-		greenBasement.draw(g);
-		blueBasement.draw(g);
+		redBasement.draw(g, offsetX, offsetY);
+		greenBasement.draw(g, offsetX, offsetY);
+		blueBasement.draw(g, offsetX, offsetY);
 
-		g.resetCamera(extendedCamera);
-		extendedCamera.draw(g);
+		//g.resetCamera(extendedCamera);
+		//extendedCamera.draw(g);
 	}
 
 	@Override
@@ -160,7 +166,7 @@ public class AnotherSimulator extends Application {
 	@Override
 	public GUIEvent updateKeyboard(KeyEvent event) {
 
-		controller.handleEvent(event);
+		//controller.handleEvent(event);
 
 		if(event.isKeyDown(KeyEvent.TSK_RIGHT_ARROW)) {
 			translate(20, 0);
@@ -187,9 +193,10 @@ public class AnotherSimulator extends Application {
 
 	public void translate(int x, int y) {
 
-		extendedCamera.setAimX(extendedCamera.getAimX()+x);
-		extendedCamera.setAimY(extendedCamera.getAimY()+y);
-
+		offsetX += x;
+		offsetY += y;
+				
+		floor.translate(x, y);
 	}
 
 }

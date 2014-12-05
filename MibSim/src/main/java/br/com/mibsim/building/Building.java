@@ -1,14 +1,11 @@
 package br.com.mibsim.building;
 
-import java.awt.Color;
-
-import br.com.etyllica.core.Drawable;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.layer.GeometricLayer;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.etyllica.linear.PointInt2D;
 
-public class Building extends GeometricLayer implements Drawable {
+public class Building extends GeometricLayer {
 	
 	private PointInt2D center;
 	
@@ -25,10 +22,9 @@ public class Building extends GeometricLayer implements Drawable {
 		layer.centralize(this);
 	}
 
-	@Override
-	public void draw(Graphic g) {
+	public void draw(Graphic g, int x, int y) {
 		//g.setAlpha(50);
-		layer.draw(g);
+		layer.draw(g, x, y);
 		
 		/*g.setColor(Color.RED);
 		g.fillRect(this);

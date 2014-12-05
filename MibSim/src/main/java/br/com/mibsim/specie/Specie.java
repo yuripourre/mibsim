@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.etyllica.core.Drawable;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.graphics.SVGColor;
 import br.com.etyllica.layer.AnimatedLayer;
@@ -17,7 +16,7 @@ import br.com.mibsim.planning.PlanningAction;
 import br.com.mibsim.planning.PlanningTask;
 import br.com.tide.action.player.ActionPlayer;
 
-public class Specie extends ActionPlayer implements Drawable {
+public class Specie extends ActionPlayer {
 
 	protected int health = 10000;
 	protected int currentHealth = health;
@@ -185,37 +184,36 @@ public class Specie extends ActionPlayer implements Drawable {
 		this.basement = basement;
 	}
 
-	@Override
-	public void draw(Graphic g) {
+	public void draw(Graphic g, int x, int y) {
 		
 		if(!dead) {
-			layer.draw(g);
-			dialog.draw(g);			
+			layer.draw(g, x, y);
+			dialog.draw(g, x, y);
 		} else {
-			deadLayer.draw(g);
+			deadLayer.draw(g, x, y);
 		}
 	}
 	
-	public void drawSensors(Graphic g) {
+	public void drawSensors(Graphic g, int x, int y) {
 		g.setColor(Color.BLACK);
 		g.setAlpha(50);
-		g.fillCircle(layer.getX()+layer.utilWidth()/2, layer.getY()+layer.utilHeight()/2, sensorRadius);
+		g.fillCircle(layer.getX()+layer.utilWidth()/2+x, layer.getY()+layer.utilHeight()/2+y, sensorRadius);
 		g.resetOpacity();
 	}
 
-	public void drawHealthBar(Graphic g) {
+	public void drawHealthBar(Graphic g, int x, int y) {
 		
 		int border = 1;
 		
 		g.setColor(Color.BLACK);
 		
-		g.fillRect(layer.getX(), layer.getY(), layer.utilWidth(), 4*border);
+		g.fillRect(layer.getX()+x, layer.getY()+y, layer.utilWidth(), 4*border);
 		
 		g.setColor(healthColor());
 		
 		int width = layer.utilWidth()*currentHealth/health;
 		
-		g.fillRect(layer.getX()+border, layer.getY()+border, width-2*border, 2*border);
+		g.fillRect(layer.getX()+x+border, layer.getY()+y+border, width-2*border, 2*border);
 	}
 	
 	private Color healthColor() {

@@ -3,12 +3,11 @@ package br.com.mibsim.fx;
 import br.com.etyllica.animation.AnimationHandler;
 import br.com.etyllica.animation.listener.OnAnimationFinishListener;
 import br.com.etyllica.animation.scripts.OpacityAnimation;
-import br.com.etyllica.core.Drawable;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.etyllica.layer.StaticLayer;
 
-public class Dialog implements Drawable, OnAnimationFinishListener {
+public class Dialog implements OnAnimationFinishListener {
 
 	private StaticLayer reportLabel;
 	private StaticLayer exploreLabel;
@@ -66,14 +65,14 @@ public class Dialog implements Drawable, OnAnimationFinishListener {
 		AnimationHandler.getInstance().add(opacityEffect);
 	}
 	
-	public void draw(Graphic g) {
+	public void draw(Graphic g, int x, int y) {
 		if(!dialogEffect.isVisible()) {
 			return;
 		}
 		
-		dialogEffect.draw(g);
+		dialogEffect.draw(g, x, y);
 		g.setOpacity(dialogEffect.getOpacity());
-		label.draw(g);
+		label.draw(g, x, y);
 		g.resetOpacity();
 	}
 
