@@ -1,5 +1,7 @@
 package br.com.mibsim.application;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +12,7 @@ import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
+import br.com.etyllica.core.loader.FontLoader;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.mibsim.building.basement.BlueBasement;
 import br.com.mibsim.building.basement.GreenBasement;
@@ -19,6 +22,7 @@ import br.com.mibsim.specie.BlueLurker;
 import br.com.mibsim.specie.GreenUltralisk;
 import br.com.mibsim.specie.RedHydralisk;
 import br.com.mibsim.specie.Specie;
+import br.com.mibsim.ui.HorizontalRule;
 import br.com.tide.input.controller.Controller;
 import br.com.tide.input.controller.EasyController;
 import br.com.vite.editor.MapEditor;
@@ -41,6 +45,10 @@ public class AnotherSimulator extends Application {
 	private List<Specie> bugs = new ArrayList<Specie>();
 	
 	private WraparoundGrid floor;
+	
+	private Font font;
+	
+	private HorizontalRule hr;
 
 	public AnotherSimulator(int w, int h) {
 		super(w, h);
@@ -76,6 +84,10 @@ public class AnotherSimulator extends Application {
 		
 		floor = new WraparoundGrid(w, h, tile);
 
+		font = FontLoader.getInstance().loadFont("Suplexmentary_Comic_NC.ttf").deriveFont(22f);
+		
+		hr = new HorizontalRule(20, 80, 300, 0);
+		
 		updateAtFixedRate(50);
 
 		loading = 100;
@@ -133,7 +145,7 @@ public class AnotherSimulator extends Application {
 
 	@Override
 	public void draw(Graphic g) {
-
+		
 		//g.setCamera(extendedCamera);
 
 		//map.draw(g);
@@ -153,6 +165,13 @@ public class AnotherSimulator extends Application {
 		greenBasement.draw(g, offsetX, offsetY);
 		blueBasement.draw(g, offsetX, offsetY);
 
+		g.setFont(font);		
+		g.setBasicStroke(2f);
+		g.setShadowColor(Color.BLACK);
+		g.setColor(Color.WHITE);
+		g.drawStringBorder("Attributes", 20, 80);
+
+		hr.draw(g);
 		//g.resetCamera(extendedCamera);
 		//extendedCamera.draw(g);
 	}
