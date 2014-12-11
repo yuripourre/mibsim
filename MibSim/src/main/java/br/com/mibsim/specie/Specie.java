@@ -77,8 +77,6 @@ public class Specie extends ActionPlayer {
 			loseEnergy(breathEnergy);	
 		}
 
-
-
 		if(currentHealth <= 0) {
 			die(now);			
 		}
@@ -88,9 +86,7 @@ public class Specie extends ActionPlayer {
 				hungry = true;
 				dialog.showHungryDialog();
 			}
-
 		}
-
 	}
 
 	private void walk(long now) {
@@ -150,6 +146,9 @@ public class Specie extends ActionPlayer {
 		case EXPLORE:
 			dialog.showExploreDialog();
 			tasks.add(basement.reportToBasement());
+			break;
+			
+		case FEED:
 			break;
 		}
 

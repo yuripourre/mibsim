@@ -13,10 +13,14 @@ public class Building extends GeometricLayer {
 	
 	private static final int TILE_SIZE = 32;
 	
-	public Building(int x, int y, String path) {
+	public Building(int x, int y) {
 		super(x, y, TILE_SIZE, TILE_SIZE);
 		
 		center = new PointInt2D(x+TILE_SIZE/2, y+TILE_SIZE/2);
+	}
+	
+	public Building(int x, int y, String path) {
+		this(x, y);		
 		
 		layer = new ImageLayer(path);
 		layer.centralize(this);
