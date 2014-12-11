@@ -28,19 +28,19 @@ public class Specie extends ActionPlayer {
 	protected int reportEnergy = 10;
 	protected int turnEnergy = 1;
 	protected int sensorRadius = 100;
-	
+
 	protected boolean dead = false;
 	protected boolean hungry = false;
 
 	protected AnimatedLayer layer;
 	protected ImageLayer deadLayer;
-	
+
 	private Dialog dialog = new Dialog();
-	
+
 	protected Basement basement;
 
 	private PlanningTask lastTask;
-	
+
 	protected List<PlanningTask> tasks = new ArrayList<PlanningTask>();
 
 	public Specie(int x, int y, int tileW, int tileH, String path, Basement basement) {
@@ -61,7 +61,7 @@ public class Specie extends ActionPlayer {
 	@Override
 	public void update(long now) {
 		super.update(now);
-		
+
 		if(dead)
 			return;
 
@@ -70,25 +70,25 @@ public class Specie extends ActionPlayer {
 		if(isWalking()) {
 			walk(now);
 			loseEnergy(walkEnergy);
-		}
-
-		if(isTurning()) {
+		} else if(isTurning()) {
 			layer.setAngle(angle);
 			loseEnergy(turnEnergy);
+		} else {
+			loseEnergy(breathEnergy);	
 		}
-		
-		loseEnergy(breathEnergy);
-		
+
+
+
 		if(currentHealth <= 0) {
 			die(now);			
 		}
-		
+
 		if(!hungry) {
 			if(isHungry()) {
 				hungry = true;
 				dialog.showHungryDialog();
 			}
-			
+
 		}
 
 	}
@@ -96,13 +96,13 @@ public class Specie extends ActionPlayer {
 	private void walk(long now) {
 		layer.animate(now);
 		layer.setCoordinates(x, y);
-		
+
 		dialog.setCoordinates(x, y);
 	}
-	
+
 	private void die(long now) {
 		dead = true;
-		
+
 		deadLayer.centralize(layer);
 	}
 
@@ -129,7 +129,7 @@ public class Specie extends ActionPlayer {
 
 		} else {
 			stopWalk();
-			
+
 			if(!currentTask.isCompleted()) {
 				completeTask(currentTask);
 				currentTask.setCompleted(true);
@@ -137,11 +137,22 @@ public class Specie extends ActionPlayer {
 		}
 
 	}
-	
+
 	private void completeTask(PlanningTask task) {
-		if(task.getAction() == PlanningAction.REPORT) {
+
+		switch (task.getAction()) {
+
+		case REPORT:
 			dialog.showReportDialog();
+			tasks.add(basement.askForDesignation());
+			break;
+			
+		case EXPLORE:
+			dialog.showExploreDialog();
+			tasks.add(basement.reportToBasement());
+			break;
 		}
+
 	}
 
 	private boolean isHungry() {
@@ -185,7 +196,7 @@ public class Specie extends ActionPlayer {
 	}
 
 	public void draw(Graphic g, int x, int y) {
-		
+
 		if(!dead) {
 			layer.draw(g, x, y);
 			dialog.draw(g, x, y);
@@ -193,7 +204,7 @@ public class Specie extends ActionPlayer {
 			deadLayer.draw(g, x, y);
 		}
 	}
-	
+
 	public void drawSensors(Graphic g, int x, int y) {
 		g.setColor(Color.BLACK);
 		g.setAlpha(50);
@@ -202,24 +213,24 @@ public class Specie extends ActionPlayer {
 	}
 
 	public void drawHealthBar(Graphic g, int x, int y) {
-		
+
 		int border = 1;
-		
+
 		g.setColor(Color.BLACK);
-		
+
 		g.fillRect(layer.getX()+x, layer.getY()+y, layer.utilWidth(), 4*border);
-		
+
 		g.setColor(healthColor());
-		
+
 		int width = layer.utilWidth()*currentHealth/health;
-		
+
 		g.fillRect(layer.getX()+x+border, layer.getY()+y+border, width-2*border, 2*border);
 	}
-	
+
 	private Color healthColor() {
 		if(isHungry())
 			return Color.RED;
-		
+
 		return SVGColor.LIME_GREEN;
 	}
 

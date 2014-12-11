@@ -34,14 +34,14 @@ public class HorizontalRule extends HorizontalComponent {
 		
 		int i = startPart;
 		
-		for(; i < w - endPart; i += layer.getW()) {
+		for(; i < w - endPart-1; i += layer.getW()) {
 			layer.draw(g, x+i, y);
 		}
 		
 		//Draw End
 		layer.setW(endPart);
 		layer.setXImage(fullWidth-endPart);
-		layer.draw(g, w-endPart, y);
+		layer.draw(g, x+i, y);
 		
 		layer.setW(fullWidth);
 		

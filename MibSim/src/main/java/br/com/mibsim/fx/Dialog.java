@@ -23,17 +23,17 @@ public class Dialog implements OnAnimationFinishListener {
 	public Dialog() {
 		super();
 				
-		dialogEffect = new ImageLayer("ui/dialog.png");
+		dialogEffect = new ImageLayer("ui/dialog/ballon.png");
 		dialogEffect.setVisible(false);
 
 		opacityEffect = new OpacityAnimation(dialogEffect, 800);
 		opacityEffect.setEndDelay(3000);
 		opacityEffect.setListener(this);
 		
-		hungryLabel = new StaticLayer("ui/hamburger.png");
-		exploreLabel = new StaticLayer("ui/map.png");
-		reportLabel = new StaticLayer("ui/sheet.png");
-		cannibalLabel = new StaticLayer("ui/evil.png");
+		hungryLabel = new StaticLayer("ui/dialog/hamburger.png");
+		exploreLabel = new StaticLayer("ui/dialog/map.png");
+		reportLabel = new StaticLayer("ui/dialog/sheet.png");
+		cannibalLabel = new StaticLayer("ui/dialog/evil.png");
 		
 		label = new ImageLayer();
 		label.cloneLayer(hungryLabel);
