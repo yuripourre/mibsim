@@ -146,13 +146,13 @@ public class Speciemen extends ActionPlayer {
 		switch (task.getAction()) {
 
 		case REPORT:
-			dialog.showReportDialog();			
+			dialog.showReportDialog();
 			askDesignation(task);
 			break;
 
 		case EXPLORE:
 			dialog.showExploreDialog();
-			reportBasement();
+			reportBasement(task);
 			break;
 
 		case FEED:
@@ -164,14 +164,16 @@ public class Speciemen extends ActionPlayer {
 		if(basement == null)
 			return;
 		
-		tasks.add(basement.askForDesignation(report));
+		PlanningTask designation = basement.askForDesignation(report);
+		
+		tasks.add(designation);
 	}
 	
-	private void reportBasement() {
+	private void reportBasement(PlanningTask exploreTask) {
 		if(basement == null)
 			return;
 		
-		tasks.add(basement.reportToBasement());
+		tasks.add(basement.reportToBasement(exploreTask));
 	}
 
 	private boolean isHungry() {

@@ -34,9 +34,9 @@ public class Basement extends Building {
 		verifyReport(report);
 		
 		PointInt2D target = nextTarget(currentIndex);
-
-		PlanningTask task = new PlanningTask(PlanningAction.EXPLORE, target, currentIndex);
 		
+		PlanningTask task = new PlanningTask(PlanningAction.EXPLORE, target, currentIndex);
+				
 		currentIndex++;
 		currentIndex %= perimeter * 8;
 		
@@ -60,7 +60,7 @@ public class Basement extends Building {
 			for(int i = 0; i < knownSectors.length; i++) {
 				if(!knownSectors[i]) {
 					allExplored = false;
-				}				
+				}
 			}
 			
 			if(allExplored) {
@@ -105,9 +105,9 @@ public class Basement extends Building {
 		return target;
 	}
 	
-	public PlanningTask reportToBasement() {
+	public PlanningTask reportToBasement(PlanningTask explore) {
 		
-		return new PlanningTask(PlanningAction.REPORT, getCenter());
+		return new PlanningTask(PlanningAction.REPORT, getCenter(), explore.getReference());
 	}
 
 }
