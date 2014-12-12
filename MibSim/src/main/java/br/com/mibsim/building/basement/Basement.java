@@ -13,6 +13,8 @@ public class Basement extends Building {
 	
 	private int currentIndex = 0;
 	
+	private boolean[] knownSectors = new boolean[8];
+	
 	private KDTree<Fountain> fountains = new KDTree<Fountain>(2);
 	
 	public Basement(int x, int y) {
@@ -27,14 +29,48 @@ public class Basement extends Building {
 		return fountains;
 	}
 
-	public PlanningTask askForDesignation() {
+	public PlanningTask askForDesignation(PlanningTask report) {
+		
+		verifyReport(report);
 		
 		PointInt2D target = nextTarget(currentIndex);
 
+		PlanningTask task = new PlanningTask(PlanningAction.EXPLORE, target, currentIndex);
+		
 		currentIndex++;
 		currentIndex %= perimeter * 8;
 		
-		return new PlanningTask(PlanningAction.EXPLORE, target);
+		return task;
+	}
+	
+	private void verifyReport(PlanningTask report) {
+		
+		if(report == null) {
+			return;
+		}
+		
+		if(report.isCompleted() && report.getReference() != PlanningTask.EMPTY_REFERENCE) {
+			
+			int sector = report.getReference();
+			
+			knownSectors[sector] = true;
+			
+			boolean allExplored = true;
+			
+			for(int i = 0; i < knownSectors.length; i++) {
+				if(!knownSectors[i]) {
+					allExplored = false;
+				}				
+			}
+			
+			if(allExplored) {
+				perimeter++;
+				currentIndex = 0;
+				
+				knownSectors = new boolean[perimeter * 8];
+			}
+		}		
+		
 	}
 	
 	public PointInt2D nextTarget(int index) {

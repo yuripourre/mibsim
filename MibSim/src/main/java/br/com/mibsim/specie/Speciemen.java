@@ -133,7 +133,7 @@ public class Speciemen extends ActionPlayer {
 
 			if(!currentTask.isCompleted()) {
 				completeTask(currentTask);
-				tasks.remove(tasks.size()-1);
+				tasks.remove(currentTask);
 			}
 		}
 
@@ -147,7 +147,7 @@ public class Speciemen extends ActionPlayer {
 
 		case REPORT:
 			dialog.showReportDialog();			
-			askDesignation();
+			askDesignation(task);
 			break;
 
 		case EXPLORE:
@@ -160,11 +160,11 @@ public class Speciemen extends ActionPlayer {
 		}
 	}
 	
-	private void askDesignation() {
+	private void askDesignation(PlanningTask report) {
 		if(basement == null)
 			return;
 		
-		tasks.add(basement.askForDesignation());
+		tasks.add(basement.askForDesignation(report));
 	}
 	
 	private void reportBasement() {
