@@ -58,7 +58,7 @@ public class AnotherSimulator extends Application {
 		bug = new RedHydralisk(100, 200, redBasement);
 		bugs.add(bug);
 		
-		generateRandomCreatures();		
+		generateRandomCreatures(40);		
 
 		controller = new EasyController(bug);
 
@@ -77,10 +77,7 @@ public class AnotherSimulator extends Application {
 		loading = 100;
 	}
 
-	private void generateRandomCreatures() {
-
-		//int quantity = 10*10;
-		int quantity = 40;
+	private void generateRandomCreatures(int quantity) {
 		
 		System.out.println("Generate Creatures!");
 
@@ -106,7 +103,6 @@ public class AnotherSimulator extends Application {
 			bug.setStartAngle(angle);
 
 			bugs.add(bug);
-
 		}
 	}
 

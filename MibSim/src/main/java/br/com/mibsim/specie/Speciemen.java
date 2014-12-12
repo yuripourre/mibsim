@@ -109,9 +109,12 @@ public class Speciemen extends ActionPlayer {
 	}
 
 	private void act() {
+		
+		if(tasks.isEmpty())
+			return;
 
 		PlanningTask currentTask = currentTask();
-
+		
 		PointInt2D target = currentTask.getTarget();
 
 		if(currentTask != lastTask) {
@@ -130,7 +133,7 @@ public class Speciemen extends ActionPlayer {
 
 			if(!currentTask.isCompleted()) {
 				completeTask(currentTask);
-				currentTask.setCompleted(true);
+				tasks.remove(tasks.size()-1);
 			}
 		}
 
@@ -138,22 +141,37 @@ public class Speciemen extends ActionPlayer {
 
 	private void completeTask(PlanningTask task) {
 
+		task.setCompleted(true);
+		
 		switch (task.getAction()) {
 
 		case REPORT:
-			dialog.showReportDialog();
-			tasks.add(basement.askForDesignation());
+			dialog.showReportDialog();			
+			askDesignation();
 			break;
 
 		case EXPLORE:
 			dialog.showExploreDialog();
-			tasks.add(basement.reportToBasement());
+			reportBasement();
 			break;
 
 		case FEED:
 			break;
 		}
-
+	}
+	
+	private void askDesignation() {
+		if(basement == null)
+			return;
+		
+		tasks.add(basement.askForDesignation());
+	}
+	
+	private void reportBasement() {
+		if(basement == null)
+			return;
+		
+		tasks.add(basement.reportToBasement());
 	}
 
 	private boolean isHungry() {
