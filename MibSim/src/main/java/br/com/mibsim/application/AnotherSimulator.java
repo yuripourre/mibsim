@@ -1,6 +1,5 @@
 package br.com.mibsim.application;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -20,16 +19,12 @@ import br.com.mibsim.specie.RedHydralisk;
 import br.com.mibsim.specie.Speciemen;
 import br.com.tide.input.controller.Controller;
 import br.com.tide.input.controller.EasyController;
-import br.com.vite.editor.MapEditor;
-import br.com.vite.export.MapExporter;
 
 public class AnotherSimulator extends Application {
 
 	private Controller controller;
 
 	private Speciemen bug;
-
-	private MapEditor map;
 
 	private RedBasement redBasement;
 	private GreenBasement greenBasement;
@@ -61,14 +56,6 @@ public class AnotherSimulator extends Application {
 		generateRandomCreatures(40);		
 
 		controller = new EasyController(bug);
-
-		try {
-			map = MapExporter.load("map1.json");
-			map.disableCollisionShow();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 				
 		floor = new ZergGrid(w, h);
 		
