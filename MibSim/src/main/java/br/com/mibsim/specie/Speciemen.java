@@ -16,7 +16,7 @@ import br.com.mibsim.planning.PlanningAction;
 import br.com.mibsim.planning.PlanningTask;
 import br.com.tide.action.player.ActionPlayer;
 
-public class Specie extends ActionPlayer {
+public class Speciemen extends ActionPlayer {
 
 	protected int health = 10000;
 	protected int currentHealth = health;
@@ -43,7 +43,7 @@ public class Specie extends ActionPlayer {
 
 	protected List<PlanningTask> tasks = new ArrayList<PlanningTask>();
 
-	public Specie(int x, int y, int tileW, int tileH, String path, Basement basement) {
+	public Speciemen(int x, int y, int tileW, int tileH, String path, Basement basement) {
 		super(x, y);
 
 		startAngle = 0;
@@ -53,9 +53,11 @@ public class Specie extends ActionPlayer {
 		layer.setSpeed(100);
 		layer.setFrames(7);
 
-		this.basement = basement;
+		if(basement != null) {
+			this.basement = basement;
 
-		tasks.add(new PlanningTask(PlanningAction.REPORT, basement.getCenter()));
+			tasks.add(new PlanningTask(PlanningAction.REPORT, basement.getCenter()));
+		}
 	}
 
 	@Override
@@ -142,12 +144,12 @@ public class Specie extends ActionPlayer {
 			dialog.showReportDialog();
 			tasks.add(basement.askForDesignation());
 			break;
-			
+
 		case EXPLORE:
 			dialog.showExploreDialog();
 			tasks.add(basement.reportToBasement());
 			break;
-			
+
 		case FEED:
 			break;
 		}
@@ -184,7 +186,11 @@ public class Specie extends ActionPlayer {
 
 	private PlanningTask currentTask() {
 		return tasks.get(tasks.size()-1);
-	}	
+	}
+	
+	public void addTask(PlanningTask task) {
+		tasks.add(task);
+	}
 
 	public Basement getBasement() {
 		return basement;

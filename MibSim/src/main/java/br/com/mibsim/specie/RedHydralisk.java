@@ -4,7 +4,7 @@ import br.com.etyllica.layer.ImageLayer;
 import br.com.mibsim.building.basement.Basement;
 
 
-public class RedHydralisk extends Specie {
+public class RedHydralisk extends Speciemen {
 
 	public RedHydralisk(int x, int y, Basement basement) {
 		super(x, y, 42, 405/7, "red_hydralisk.png", basement);

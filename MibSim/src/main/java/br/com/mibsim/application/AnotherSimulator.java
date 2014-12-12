@@ -17,7 +17,7 @@ import br.com.mibsim.editor.ZergGrid;
 import br.com.mibsim.specie.BlueLurker;
 import br.com.mibsim.specie.GreenUltralisk;
 import br.com.mibsim.specie.RedHydralisk;
-import br.com.mibsim.specie.Specie;
+import br.com.mibsim.specie.Speciemen;
 import br.com.tide.input.controller.Controller;
 import br.com.tide.input.controller.EasyController;
 import br.com.vite.editor.MapEditor;
@@ -27,7 +27,7 @@ public class AnotherSimulator extends Application {
 
 	private Controller controller;
 
-	private Specie bug;
+	private Speciemen bug;
 
 	private MapEditor map;
 
@@ -37,7 +37,7 @@ public class AnotherSimulator extends Application {
 
 	private boolean paused = false;
 
-	private List<Specie> bugs = new ArrayList<Specie>();
+	private List<Speciemen> bugs = new ArrayList<Speciemen>();
 	
 	private ZergGrid floor;
 	
@@ -93,7 +93,7 @@ public class AnotherSimulator extends Application {
 
 			int specie = random.nextInt(3);
 
-			Specie bug = new RedHydralisk(x, y, redBasement);
+			Speciemen bug = new RedHydralisk(x, y, redBasement);
 
 			if(specie == 1) {
 				bug = new GreenUltralisk(x, y, greenBasement);
@@ -116,7 +116,7 @@ public class AnotherSimulator extends Application {
 		if(paused)
 			return;
 
-		for(Specie bug: bugs) {
+		for(Speciemen bug: bugs) {
 			bug.update(now);
 		}
 
@@ -136,11 +136,11 @@ public class AnotherSimulator extends Application {
 		//map.getMap().draw(g, 0, 0, 32, 28);
 		floor.draw(g);
 
-		for(Specie bug: bugs) {
+		for(Speciemen bug: bugs) {
 			bug.drawSensors(g, offsetX, offsetY);
 		}
 		
-		for(Specie bug: bugs) {	
+		for(Speciemen bug: bugs) {	
 			bug.draw(g, offsetX, offsetY);
 			bug.drawHealthBar(g, offsetX, offsetY);
 		}
