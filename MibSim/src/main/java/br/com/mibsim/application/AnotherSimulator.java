@@ -10,11 +10,10 @@ import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
-import br.com.etyllica.layer.ImageLayer;
 import br.com.mibsim.building.basement.BlueBasement;
 import br.com.mibsim.building.basement.GreenBasement;
 import br.com.mibsim.building.basement.RedBasement;
-import br.com.mibsim.editor.WraparoundGrid;
+import br.com.mibsim.editor.ZergGrid;
 import br.com.mibsim.specie.BlueLurker;
 import br.com.mibsim.specie.GreenUltralisk;
 import br.com.mibsim.specie.RedHydralisk;
@@ -40,7 +39,7 @@ public class AnotherSimulator extends Application {
 
 	private List<Specie> bugs = new ArrayList<Specie>();
 	
-	private WraparoundGrid floor;
+	private ZergGrid floor;
 	
 	public AnotherSimulator(int w, int h) {
 		super(w, h);
@@ -70,11 +69,8 @@ public class AnotherSimulator extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		ImageLayer tile = new ImageLayer(0, 0, 32, 32,"tiles/tileset.png");
-		tile.setImageCoordinates(0, 32);
-		
-		floor = new WraparoundGrid(w, h, tile);
+				
+		floor = new ZergGrid(w, h);
 		
 		updateAtFixedRate(50);
 
