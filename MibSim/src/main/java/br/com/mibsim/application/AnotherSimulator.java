@@ -148,19 +148,19 @@ public class AnotherSimulator extends Application {
 		//controller.handleEvent(event);
 
 		if(event.isKeyDown(KeyEvent.TSK_RIGHT_ARROW)) {
-			translate(20, 0);
-		}
-
-		if(event.isKeyDown(KeyEvent.TSK_LEFT_ARROW)) {
 			translate(-20, 0);
 		}
 
+		if(event.isKeyDown(KeyEvent.TSK_LEFT_ARROW)) {
+			translate(20, 0);
+		}
+
 		if(event.isKeyDown(KeyEvent.TSK_UP_ARROW)) {
-			translate(0, -20);
+			translate(0, 20);
 		}
 
 		if(event.isKeyDown(KeyEvent.TSK_DOWN_ARROW)) {
-			translate(0, 20);
+			translate(0, -20);
 		}
 
 		if(event.isKeyDown(KeyEvent.TSK_SPACE)) {
