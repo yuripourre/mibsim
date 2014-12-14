@@ -20,8 +20,8 @@ public class Simulator extends Etyllica {
 		
 		setPath(path+"../");
 		
-		return new AnotherSimulator(w, h);
-		//return new ConfigurationScreen(w, h);
+		//return new AnotherSimulator(w, h);
+		return new ConfigurationScreen(w, h);
 		
 	}
 

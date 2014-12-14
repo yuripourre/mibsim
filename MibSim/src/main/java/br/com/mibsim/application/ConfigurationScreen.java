@@ -6,9 +6,13 @@ import java.awt.Font;
 import br.com.etyllica.context.Application;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.loader.FontLoader;
+import br.com.mibsim.ui.CapacitySpinner;
 import br.com.mibsim.ui.HorizontalPanel;
 import br.com.mibsim.ui.HorizontalRule;
-import br.com.mibsim.ui.HorizontalSpinner;
+import br.com.mibsim.ui.HungerThresholdSpinner;
+import br.com.mibsim.ui.MetabolismSpinner;
+import br.com.mibsim.ui.SpeedSpinner;
+
 
 public class ConfigurationScreen extends Application {
 
@@ -18,7 +22,11 @@ public class ConfigurationScreen extends Application {
 	
 	private HorizontalPanel panel;
 	
-	private HorizontalSpinner spinner;
+	//Specie Configuration
+	private SpeedSpinner speedSpinner;
+	private CapacitySpinner capacitySpinner;
+	private MetabolismSpinner metabolismSpinner;
+	private HungerThresholdSpinner hungerSpinner;
 	
 	public ConfigurationScreen(int w, int h) {
 		super(w, h);
@@ -33,9 +41,15 @@ public class ConfigurationScreen extends Application {
 		
 		panel = new HorizontalPanel(16, 40, 700, 0);
 		
-		spinner = new HorizontalSpinner(60, 100, 100, 30);
+		speedSpinner = new SpeedSpinner(60, 100, 180, 30);
+		capacitySpinner = new CapacitySpinner(60, 140, 180, 30);
+		metabolismSpinner = new MetabolismSpinner(60, 180, 180, 30);
+		hungerSpinner = new HungerThresholdSpinner(60, 220, 180, 30);
 		
-		add(spinner);
+		add(speedSpinner);
+		add(capacitySpinner);
+		add(metabolismSpinner);
+		add(hungerSpinner);
 		
 		loading = 100;
 	}
