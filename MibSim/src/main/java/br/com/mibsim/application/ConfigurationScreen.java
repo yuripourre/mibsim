@@ -8,6 +8,7 @@ import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.loader.FontLoader;
 import br.com.mibsim.ui.HorizontalPanel;
 import br.com.mibsim.ui.HorizontalRule;
+import br.com.mibsim.ui.HorizontalSpinner;
 
 public class ConfigurationScreen extends Application {
 
@@ -16,6 +17,8 @@ public class ConfigurationScreen extends Application {
 	private HorizontalRule hr;
 	
 	private HorizontalPanel panel;
+	
+	private HorizontalSpinner spinner;
 	
 	public ConfigurationScreen(int w, int h) {
 		super(w, h);
@@ -30,6 +33,10 @@ public class ConfigurationScreen extends Application {
 		
 		panel = new HorizontalPanel(16, 40, 700, 0);
 		
+		spinner = new HorizontalSpinner(60, 100, 100, 30);
+		
+		add(spinner);
+		
 		loading = 100;
 	}
 
@@ -43,7 +50,7 @@ public class ConfigurationScreen extends Application {
 		g.setShadowColor(Color.BLACK);
 		g.setColor(Color.WHITE);
 		g.drawStringBorder("Attributes", 20, 80);
-
+		
 		hr.draw(g);
 	}
 
