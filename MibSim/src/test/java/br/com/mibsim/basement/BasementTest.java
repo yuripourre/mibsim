@@ -39,7 +39,9 @@ public class BasementTest {
 	@Test
 	public void testRequestDesignation() {
 			
-		PlanningTask task = basement.askForDesignation();
+		PlanningTask earlierTask = new PlanningTask(PlanningAction.REPORT, new PointInt2D(0,0));
+		
+		PlanningTask task = basement.askForDesignation(earlierTask);
 		
 		assertEquals(PlanningAction.EXPLORE, task.getAction());				
 	}
