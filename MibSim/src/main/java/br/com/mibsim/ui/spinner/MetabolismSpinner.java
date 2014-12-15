@@ -1,4 +1,4 @@
-package br.com.mibsim.ui;
+package br.com.mibsim.ui.spinner;
 
 
 public class MetabolismSpinner extends MibSimSpinner {
@@ -10,6 +10,8 @@ public class MetabolismSpinner extends MibSimSpinner {
 		step = 1;
 		maxValue = 10000;
 		minValue = 1;
+		
+		reload();
 	}
 	
 }

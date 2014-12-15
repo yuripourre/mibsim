@@ -1,4 +1,4 @@
-package br.com.mibsim.ui;
+package br.com.mibsim.ui.spinner;
 
 
 public class SpeedSpinner extends MibSimSpinner {
@@ -10,6 +10,8 @@ public class SpeedSpinner extends MibSimSpinner {
 		step = 1;
 		maxValue = 90;
 		minValue = 1;
+		
+		reload();
 	}
 
 }
