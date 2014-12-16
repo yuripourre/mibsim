@@ -9,17 +9,20 @@ import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
+import br.com.etyllica.util.kdtree.KDTree;
+import br.com.etyllica.util.kdtree.KeyDuplicateException;
+import br.com.etyllica.util.kdtree.KeySizeException;
+import br.com.mibsim.building.basement.HydraliskBasement;
 import br.com.mibsim.building.basement.LurkerBasement;
 import br.com.mibsim.building.basement.UltraliskBasement;
-import br.com.mibsim.building.basement.HydraliskBasement;
 import br.com.mibsim.editor.ZergGrid;
 import br.com.mibsim.model.fountain.AdamantiteFountain;
 import br.com.mibsim.model.fountain.Fountain;
 import br.com.mibsim.model.fountain.WaterFountain;
-import br.com.mibsim.specie.Lurker;
-import br.com.mibsim.specie.Ultralisk;
 import br.com.mibsim.specie.Hydralisk;
+import br.com.mibsim.specie.Lurker;
 import br.com.mibsim.specie.Speciemen;
+import br.com.mibsim.specie.Ultralisk;
 import br.com.tide.input.controller.Controller;
 import br.com.tide.input.controller.EasyController;
 
@@ -33,18 +36,21 @@ public class AnotherSimulator extends Application {
 	private UltraliskBasement greenBasement;
 	private LurkerBasement blueBasement;
 
-	private boolean paused = true;
+	private boolean paused = false;
 
 	private List<Speciemen> bugs = new ArrayList<Speciemen>();
 	private List<Fountain> fountains = new ArrayList<Fountain>();
-	
+	private KDTree<Fountain> fountainsTree = new KDTree<Fountain>(2);
+
 	private ZergGrid floor;
-	
+
 	private boolean drawSensors = true;
 	private boolean drawHealthBar = true;	
-	
+
 	public AnotherSimulator(int w, int h) {
 		super(w, h);
+
+		//paused = true;
 	}
 
 	@Override
@@ -59,23 +65,23 @@ public class AnotherSimulator extends Application {
 
 		bug = new Hydralisk(100, 200, redBasement);
 		bugs.add(bug);
-		
+
 		generateRandomCreatures(40);
-		
-		generateFountains();
+
+		generateFountains();		
 
 		controller = new EasyController(bug);
-				
+
 		floor = new ZergGrid(w, h);
-		
+
 		updateAtFixedRate(50);
 
 		loading = 100;
 	}
 
 	private void generateRandomCreatures(int quantity) {
-		
-		System.out.println("Generate Creatures!");
+
+		System.out.println("Generating Creatures!");
 
 		Random random = new Random();
 
@@ -101,11 +107,47 @@ public class AnotherSimulator extends Application {
 			bugs.add(bug);
 		}
 	}
-	
+
 	private void generateFountains() {
-		fountains.add(new WaterFountain(300, 400));
-		
-		fountains.add(new AdamantiteFountain(700, 400));
+
+		System.out.println("Generating Fountains!");
+
+		try {
+
+			addWaterFountain(300,400);
+			addAdamantiteFountain(700, 400);
+
+		} catch (KeySizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (KeyDuplicateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void addWaterFountain(int x, int y) throws KeySizeException, KeyDuplicateException {
+
+		double[] key = new double[2];
+		key[0] = x;
+		key[1] = y;
+
+		Fountain fountain = new WaterFountain(x, y);
+
+		fountainsTree.insert(key, fountain);
+		fountains.add(fountain);
+	}
+
+	private void addAdamantiteFountain(int x, int y) throws KeySizeException, KeyDuplicateException {
+		double[] key = new double[2];
+		key[0] = x;
+		key[1] = y;
+
+		Fountain fountain = new AdamantiteFountain(x, y);
+
+		fountainsTree.insert(key, fountain);
+		fountains.add(fountain);
 	}
 
 	@Override
@@ -114,26 +156,50 @@ public class AnotherSimulator extends Application {
 		if(paused)
 			return;
 
+		updateBugs(now);
+	}
+
+	private void updateBugs(long now) {
+
 		for(Speciemen bug: bugs) {
 			bug.update(now);
-		}
 
+			double[] key = bug.getPositionAsArray();
+
+			double radius = bug.getSensorRadius();
+
+			try {
+				List<Fountain> found = fountainsTree.nearestEuclidean(key, radius);
+
+				for(Fountain fountain: found) {
+					bug.discovered(fountain);	
+				}
+
+			} catch (KeySizeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			//for(Fountainfound.)
+
+			//Basement basement = bug.getBasement();
+		}
 	}
 
 	int cx = 0;
-	
+
 	int offsetX = 0;
 	int offsetY = 0;
 
 	@Override
 	public void draw(Graphic g) {
-		
+
 		//g.setCamera(extendedCamera);
 
 		//map.draw(g);
 		//map.getMap().draw(g, 0, 0, 32, 28);
 		floor.draw(g);
-				
+
 		drawSpeciemens(g);
 		drawFountains(g);
 
@@ -144,19 +210,22 @@ public class AnotherSimulator extends Application {
 		//g.resetCamera(extendedCamera);
 		//extendedCamera.draw(g);
 	}
-	
+
 	private void drawSpeciemens(Graphic g) {
-		for(Speciemen bug: bugs) {
-			if(drawSensors)
+		if(drawSensors) {
+			for(Speciemen bug: bugs) {
 				bug.drawSensors(g, offsetX, offsetY);
-			
+			}
+		}
+
+		for(Speciemen bug: bugs) {	
 			bug.draw(g, offsetX, offsetY);
-			
+
 			if(drawHealthBar)
 				bug.drawHealthBar(g, offsetX, offsetY);
 		}
 	}
-	
+
 	private void drawFountains(Graphic g) {
 		for(Fountain fountain: fountains) {
 			fountain.draw(g, offsetX, offsetY);
@@ -193,11 +262,11 @@ public class AnotherSimulator extends Application {
 		if(event.isKeyDown(KeyEvent.TSK_SPACE)) {
 			paused = !paused;
 		}
-		
+
 		if(event.isKeyDown(KeyEvent.TSK_S)) {
 			drawSensors = !drawSensors;	
 		}
-		
+
 		if(event.isKeyDown(KeyEvent.TSK_H)) {
 			drawHealthBar = !drawHealthBar;	
 		}
@@ -209,7 +278,7 @@ public class AnotherSimulator extends Application {
 
 		offsetX += x;
 		offsetY += y;
-				
+
 		floor.translate(x, y);
 	}
 

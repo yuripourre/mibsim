@@ -1,7 +1,12 @@
 package br.com.mibsim.building.basement;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import br.com.etyllica.linear.PointInt2D;
 import br.com.etyllica.util.kdtree.KDTree;
+import br.com.etyllica.util.kdtree.KeyDuplicateException;
+import br.com.etyllica.util.kdtree.KeySizeException;
 import br.com.mibsim.building.Building;
 import br.com.mibsim.model.fountain.Fountain;
 import br.com.mibsim.planning.PlanningAction;
@@ -15,6 +20,7 @@ public class Basement extends Building {
 	
 	private boolean[] knownSectors = new boolean[8];
 	
+	private Set<Fountain> fountainsSet = new HashSet<Fountain>();
 	private KDTree<Fountain> fountains = new KDTree<Fountain>(2);
 	
 	public Basement(int x, int y) {
@@ -108,6 +114,35 @@ public class Basement extends Building {
 	public PlanningTask reportToBasement(PlanningTask explore) {
 		
 		return new PlanningTask(PlanningAction.REPORT, getCenter(), explore.getReference());
+	}
+
+	public void reportFountain(Fountain found) {
+		if(fountainsSet.contains(found))
+			return;
+		
+		addFountain(found);
+	}
+	
+	private void addFountain(Fountain found) {
+		fountainsSet.add(found);		
+		
+		try {
+			double[] key = new double[2];
+			key[0] = found.getX();
+			key[1] = found.getY();
+			
+			fountains.insert(key, found);
+		} catch (KeySizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (KeyDuplicateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public Set<Fountain> getFountainsSet() {
+		return fountainsSet;
 	}
 
 }

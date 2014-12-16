@@ -1,6 +1,7 @@
 import br.com.etyllica.Etyllica;
 import br.com.etyllica.context.Application;
 import br.com.etyllica.util.PathHelper;
+import br.com.mibsim.application.AnotherSimulator;
 import br.com.mibsim.application.ConfigurationScreen;
 
 
@@ -19,8 +20,8 @@ public class Simulator extends Etyllica {
 		
 		setPath(path+"../");
 		
-		//return new AnotherSimulator(w, h);
-		return new ConfigurationScreen(w, h);		
+		return new AnotherSimulator(w, h);
+		//return new ConfigurationScreen(w, h);		
 	}
 
 }

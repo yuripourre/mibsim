@@ -2,7 +2,9 @@ package br.com.mibsim.specie;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.graphics.SVGColor;
@@ -12,6 +14,7 @@ import br.com.etyllica.linear.Point2D;
 import br.com.etyllica.linear.PointInt2D;
 import br.com.mibsim.building.basement.Basement;
 import br.com.mibsim.fx.Dialog;
+import br.com.mibsim.model.fountain.Fountain;
 import br.com.mibsim.model.fountain.Nutrient;
 import br.com.mibsim.planning.PlanningAction;
 import br.com.mibsim.planning.PlanningTask;
@@ -45,6 +48,10 @@ public class Speciemen extends ActionPlayer {
 	private PlanningTask lastTask;
 
 	protected List<PlanningTask> tasks = new ArrayList<PlanningTask>();
+		
+	protected Set<Fountain> found = new HashSet<Fountain>();
+	
+	protected Set<Fountain> reported = new HashSet<Fountain>();
 
 	public Speciemen(int x, int y, int tileW, int tileH, String path, Basement basement) {
 		super(x, y);
@@ -177,6 +184,20 @@ public class Speciemen extends ActionPlayer {
 			return;
 		
 		tasks.add(basement.reportToBasement(exploreTask));
+		
+		//Share knowledge
+		if(!found.isEmpty()) {
+			
+			for(Fountain fountain: found) {
+				basement.reportFountain(fountain);
+			}
+			
+			found.clear();
+		}
+		
+		//Update database  
+		reported.clear();
+		reported.addAll(basement.getFountainsSet());		
 	}
 
 	private boolean isHungry() {
@@ -260,6 +281,27 @@ public class Speciemen extends ActionPlayer {
 			return Color.RED;
 
 		return SVGColor.LIME_GREEN;
+	}
+
+	public double[] getPositionAsArray() {
+		
+		double[] position = new double[2];
+		position[0] = getDx();
+		position[1] = getDy();
+		
+		return position;
+	}
+	
+	public int getSensorRadius() {
+		return sensorRadius;
+	}
+
+	public void discovered(Fountain fountain) {
+		if(reported.contains(fountain))
+			return;
+		
+		found.add(fountain);
+		reported.add(fountain);
 	}
 
 }
