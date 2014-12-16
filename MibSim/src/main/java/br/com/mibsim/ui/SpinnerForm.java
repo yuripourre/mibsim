@@ -5,6 +5,7 @@ import br.com.mibsim.ui.avatar.MibSimAvatar;
 import br.com.mibsim.ui.spinner.CapacitySpinner;
 import br.com.mibsim.ui.spinner.HungerThresholdSpinner;
 import br.com.mibsim.ui.spinner.MetabolismSpinner;
+import br.com.mibsim.ui.spinner.NutrientSpinner;
 import br.com.mibsim.ui.spinner.SpeedSpinner;
 
 public class SpinnerForm {
@@ -12,7 +13,7 @@ public class SpinnerForm {
 	protected TextLabel titleLabel;
 	protected MibSimAvatar avatar;
 	
-	protected SpeedSpinner foodSpinner;
+	protected NutrientSpinner foodSpinner;
 	protected SpeedSpinner speedSpinner;
 	protected CapacitySpinner capacitySpinner;
 	protected MetabolismSpinner metabolismSpinner;
@@ -30,7 +31,7 @@ public class SpinnerForm {
 		titleLabel.setText(title);
 		titleLabel.setFontSize(24);
 		
-		foodSpinner = new SpeedSpinner(x, y+offset+spacing*0, spinnerW, spinnerH);
+		foodSpinner = new NutrientSpinner(x, y+offset+spacing*0, spinnerW, spinnerH);
 		speedSpinner = new SpeedSpinner(x, y+offset+spacing*1, spinnerW, spinnerH);
 		metabolismSpinner = new MetabolismSpinner(x, y+offset+spacing*2, spinnerW, spinnerH);
 		hungerSpinner = new HungerThresholdSpinner(x, y+offset+spacing*3, spinnerW, spinnerH);
@@ -45,7 +46,7 @@ public class SpinnerForm {
 		return avatar;
 	}
 
-	public SpeedSpinner getFoodSpinner() {
+	public NutrientSpinner getFoodSpinner() {
 		return foodSpinner;
 	}
 	
