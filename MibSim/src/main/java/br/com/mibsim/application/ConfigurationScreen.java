@@ -4,10 +4,13 @@ import java.awt.Color;
 import java.awt.Font;
 
 import br.com.etyllica.context.Application;
+import br.com.etyllica.core.event.GUIEvent;
+import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.loader.FontLoader;
 import br.com.etyllica.theme.Theme;
 import br.com.etyllica.theme.ThemeManager;
+import br.com.mibsim.editor.ZergGrid;
 import br.com.mibsim.ui.HorizontalPanel;
 import br.com.mibsim.ui.HorizontalRule;
 import br.com.mibsim.ui.HydraliskForm;
@@ -18,6 +21,8 @@ import br.com.mibsim.ui.UltraliskForm;
 
 public class ConfigurationScreen extends Application {
 
+	private ZergGrid grid;
+	
 	private Font font;
 	
 	private HorizontalRule hr;
@@ -55,6 +60,8 @@ public class ConfigurationScreen extends Application {
 		addFormViews(hydraliskForm);
 		addFormViews(lurkerForm);
 		
+		grid = new ZergGrid(w, h);
+		
 		loading = 100;
 	}
 	
@@ -70,7 +77,9 @@ public class ConfigurationScreen extends Application {
 
 	@Override
 	public void draw(Graphic g) {
-				
+			
+		grid.draw(g);
+		
 		g.setFont(font);
 		
 		panel.draw(g);
@@ -91,6 +100,15 @@ public class ConfigurationScreen extends Application {
 		g.drawStringBorder("Capacity:", labelX, labelY+spacing*4);		
 		
 		hr.draw(g);		
+	}
+	
+	public GUIEvent updateKeyboard(KeyEvent event) {
+		
+		if(event.isKeyDown(KeyEvent.TSK_ENTER)) {
+			nextApplication = new AnotherSimulator(w, h);
+		}
+		
+		return GUIEvent.NONE;
 	}
 
 }

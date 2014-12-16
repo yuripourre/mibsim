@@ -30,7 +30,7 @@ public class AnotherSimulator extends Application {
 	private GreenBasement greenBasement;
 	private BlueBasement blueBasement;
 
-	private boolean paused = false;
+	private boolean paused = true;
 
 	private List<Speciemen> bugs = new ArrayList<Speciemen>();
 	

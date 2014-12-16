@@ -10,10 +10,11 @@ public class LurkerForm extends SpinnerForm {
 		
 		avatar = new LurkerAvatar(x, y);
 		
+		foodSpinner.nextItem();
 		speedSpinner.setValue(6);
 		metabolismSpinner.setValue(5);
 		hungerSpinner.setValue(3600);
 		capacitySpinner.setValue(8000);
-	}	
+	}
 	
 }
