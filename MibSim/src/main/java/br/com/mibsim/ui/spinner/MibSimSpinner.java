@@ -41,8 +41,7 @@ public class MibSimSpinner extends HorizontalSpinner<Integer> {
 	
 	@Override
 	public void draw(Graphic g) {
-		g.setFont(font);
-		
+		g.setFont(font);		
 		super.draw(g);
 	}
 	

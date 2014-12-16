@@ -12,6 +12,7 @@ public class SpinnerForm {
 	protected TextLabel titleLabel;
 	protected MibSimAvatar avatar;
 	
+	protected SpeedSpinner foodSpinner;
 	protected SpeedSpinner speedSpinner;
 	protected CapacitySpinner capacitySpinner;
 	protected MetabolismSpinner metabolismSpinner;
@@ -21,15 +22,19 @@ public class SpinnerForm {
 		super();
 				
 		int spinnerW = 180;
-		int spinnerH = 30;
-		
-		titleLabel = new TextLabel(x, y-100, spinnerW);
+		int spinnerH = 32;
+		int spacing = 38;
+		int offset = 10;
+				
+		titleLabel = new TextLabel(x, y-106, spinnerW);
 		titleLabel.setText(title);
+		titleLabel.setFontSize(24);
 		
-		speedSpinner = new SpeedSpinner(x, y+40*0, spinnerW, spinnerH);
-		metabolismSpinner = new MetabolismSpinner(x, y+40*1, spinnerW, spinnerH);
-		hungerSpinner = new HungerThresholdSpinner(x, y+40*2, spinnerW, spinnerH);
-		capacitySpinner = new CapacitySpinner(x, y+40*3, spinnerW, spinnerH);
+		foodSpinner = new SpeedSpinner(x, y+offset+spacing*0, spinnerW, spinnerH);
+		speedSpinner = new SpeedSpinner(x, y+offset+spacing*1, spinnerW, spinnerH);
+		metabolismSpinner = new MetabolismSpinner(x, y+offset+spacing*2, spinnerW, spinnerH);
+		hungerSpinner = new HungerThresholdSpinner(x, y+offset+spacing*3, spinnerW, spinnerH);
+		capacitySpinner = new CapacitySpinner(x, y+offset+spacing*4, spinnerW, spinnerH);
 	}
 	
 	public TextLabel getTitle() {
@@ -40,6 +45,10 @@ public class SpinnerForm {
 		return avatar;
 	}
 
+	public SpeedSpinner getFoodSpinner() {
+		return foodSpinner;
+	}
+	
 	public SpeedSpinner getSpeedSpinner() {
 		return speedSpinner;
 	}

@@ -8,8 +8,8 @@ public class HorizontalPanel extends HorizontalRule {
 		super(x, y, w, h);
 		
 		layer = new ImageLayer("ui/metal_panel.png");
-		startPart = 27;
-		endPart = 32;
+		startPart = 36;
+		endPart = 36;
 	}
 	
 }
