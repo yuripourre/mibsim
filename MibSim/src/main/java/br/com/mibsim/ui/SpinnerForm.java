@@ -1,6 +1,7 @@
 package br.com.mibsim.ui;
 
 import br.com.etyllica.gui.label.TextLabel;
+import br.com.mibsim.ui.avatar.MibSimAvatar;
 import br.com.mibsim.ui.spinner.CapacitySpinner;
 import br.com.mibsim.ui.spinner.HungerThresholdSpinner;
 import br.com.mibsim.ui.spinner.MetabolismSpinner;
@@ -9,6 +10,7 @@ import br.com.mibsim.ui.spinner.SpeedSpinner;
 public class SpinnerForm {
 	
 	protected TextLabel titleLabel;
+	protected MibSimAvatar avatar;
 	
 	protected SpeedSpinner speedSpinner;
 	protected CapacitySpinner capacitySpinner;
@@ -32,6 +34,10 @@ public class SpinnerForm {
 	
 	public TextLabel getTitle() {
 		return titleLabel;
+	}
+	
+	public MibSimAvatar getAvatar() {
+		return avatar;
 	}
 
 	public SpeedSpinner getSpeedSpinner() {

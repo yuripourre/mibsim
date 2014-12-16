@@ -23,9 +23,9 @@ public class ConfigurationScreen extends Application {
 	private HorizontalPanel panel;
 	
 	//Specie Form
-	UltraliskForm ultraliskForm;
-	HydraliskForm hydraliskForm;
-	LurkerForm lurkerForm;
+	private UltraliskForm ultraliskForm;
+	private HydraliskForm hydraliskForm;
+	private LurkerForm lurkerForm;
 	
 	public ConfigurationScreen(int w, int h) {
 		super(w, h);
@@ -36,11 +36,11 @@ public class ConfigurationScreen extends Application {
 		
 		font = FontLoader.getInstance().loadFont("Suplexmentary_Comic_NC.ttf").deriveFont(22f);
 		
-		hr = new HorizontalRule(20, 80, 300, 0);
+		hr = new HorizontalRule(20, 150, 700, 0);
 		
 		panel = new HorizontalPanel(5, 40, 780, 0);
 		
-		int formY = 150;
+		int formY = 164;
 		
 		ultraliskForm = new UltraliskForm(160, formY);
 		hydraliskForm = new HydraliskForm(360, formY);
@@ -55,6 +55,7 @@ public class ConfigurationScreen extends Application {
 	
 	private void addFormViews(SpinnerForm form) {
 		add(form.getTitle());
+		add(form.getAvatar());
 		add(form.getSpeedSpinner());
 		add(form.getMetabolismSpinner());
 		add(form.getHungerSpinner());
@@ -67,15 +68,11 @@ public class ConfigurationScreen extends Application {
 		g.setFont(font);
 		
 		panel.draw(g);
-		
-		g.setColor(Color.BLACK);
-		g.setAlpha(50);
-		g.fillRect(panel);
-		
+				
 		g.setBasicStroke(2f);
 		g.setShadowColor(Color.BLACK);
 		g.setColor(Color.WHITE);
-		g.drawStringBorder("Attributes", 20, 80);
+		g.drawStringBorder("Attributes", 40, 100);
 		
 		hr.draw(g);		
 	}
