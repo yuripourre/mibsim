@@ -43,4 +43,13 @@ public class Building extends GeometricLayer {
 		this.center = center;
 	}
 	
+	public double[] getPositionAsArray() {
+		
+		double[] position = new double[2];
+		position[0] = center.getX();
+		position[1] = center.getY();
+		
+		return position;
+	}
+	
 }

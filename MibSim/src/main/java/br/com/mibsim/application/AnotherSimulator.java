@@ -32,6 +32,9 @@ public class AnotherSimulator extends Application {
 
 	private Speciemen bug;
 
+	private int offsetX = 0;
+	private int offsetY = 0;
+
 	private HydraliskBasement redBasement;
 	private UltraliskBasement greenBasement;
 	private LurkerBasement blueBasement;
@@ -180,16 +183,8 @@ public class AnotherSimulator extends Application {
 				e.printStackTrace();
 			}
 
-			//for(Fountainfound.)
-
-			//Basement basement = bug.getBasement();
 		}
 	}
-
-	int cx = 0;
-
-	int offsetX = 0;
-	int offsetY = 0;
 
 	@Override
 	public void draw(Graphic g) {

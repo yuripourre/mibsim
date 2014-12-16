@@ -26,5 +26,9 @@ public abstract class Fountain extends Building {
 				
 		return currentCapacity;
 	}
+
+	public Nutrient getNutrient() {
+		return nutrient;
+	}
 	
 }

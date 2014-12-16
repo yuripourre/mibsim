@@ -12,6 +12,9 @@ import br.com.etyllica.layer.AnimatedLayer;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.etyllica.linear.Point2D;
 import br.com.etyllica.linear.PointInt2D;
+import br.com.etyllica.util.kdtree.KDTree;
+import br.com.etyllica.util.kdtree.KeyDuplicateException;
+import br.com.etyllica.util.kdtree.KeySizeException;
 import br.com.mibsim.building.basement.Basement;
 import br.com.mibsim.fx.Dialog;
 import br.com.mibsim.model.fountain.Fountain;
@@ -32,7 +35,7 @@ public class Speciemen extends ActionPlayer {
 	protected int reportEnergy = 10;
 	protected int turnEnergy = 1;
 	protected int sensorRadius = 100;
-	
+
 	protected Nutrient nutrient = Nutrient.WATER;
 
 	protected boolean dead = false;
@@ -47,11 +50,15 @@ public class Speciemen extends ActionPlayer {
 
 	private PlanningTask lastTask;
 
+	private Fountain nearest = null;
+
 	protected List<PlanningTask> tasks = new ArrayList<PlanningTask>();
-		
+
 	protected Set<Fountain> found = new HashSet<Fountain>();
-	
-	protected Set<Fountain> reported = new HashSet<Fountain>();
+
+	protected Set<Fountain> knownFountains = new HashSet<Fountain>();
+
+	protected KDTree<Fountain> fountainsTree = new KDTree<Fountain>(2);
 
 	public Speciemen(int x, int y, int tileW, int tileH, String path, Basement basement) {
 		super(x, y);
@@ -119,12 +126,21 @@ public class Speciemen extends ActionPlayer {
 	}
 
 	private void act() {
-		
+
 		if(tasks.isEmpty())
 			return;
 
 		PlanningTask currentTask = currentTask();
-		
+
+		if(isHungry()) {
+			searchForFood();
+		}
+
+		walkToTarget(currentTask);
+	}
+
+	private void walkToTarget(PlanningTask currentTask) {
+
 		PointInt2D target = currentTask.getTarget();
 
 		if(currentTask != lastTask) {
@@ -152,7 +168,7 @@ public class Speciemen extends ActionPlayer {
 	private void completeTask(PlanningTask task) {
 
 		task.setCompleted(true);
-		
+
 		switch (task.getAction()) {
 
 		case REPORT:
@@ -166,38 +182,65 @@ public class Speciemen extends ActionPlayer {
 			break;
 
 		case FEED:
+			
 			break;
 		}
 	}
-	
+
+	private void searchForFood() {
+
+		if(fountainsTree.isEmpty())
+			return;
+		
+		try {
+			
+			nearest = fountainsTree.nearest(getPositionAsArray());
+
+			PlanningTask feed = new PlanningTask(PlanningAction.FEED, nearest.getCenter());
+
+			tasks.add(feed);
+
+		} catch (KeySizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	private void askDesignation(PlanningTask report) {
 		if(basement == null)
 			return;
-		
+
 		PlanningTask designation = basement.askForDesignation(report);
-		
+
 		tasks.add(designation);
 	}
-	
+
 	private void reportBasement(PlanningTask exploreTask) {
 		if(basement == null)
 			return;
-		
+
 		tasks.add(basement.reportToBasement(exploreTask));
-		
+
 		//Share knowledge
 		if(!found.isEmpty()) {
-			
+
 			for(Fountain fountain: found) {
 				basement.reportFountain(fountain);
 			}
-			
+
 			found.clear();
 		}
+
+		//Clear database
+		knownFountains.clear();
+		fountainsTree = new KDTree<Fountain>(2);
 		
-		//Update database  
-		reported.clear();
-		reported.addAll(basement.getFountainsSet());		
+		//Update database
+		for(Fountain fountain: basement.getFountainsSet()) {
+			addFountain(fountain);
+			knownFountains.add(fountain);
+		}
+		
 	}
 
 	private boolean isHungry() {
@@ -215,7 +258,6 @@ public class Speciemen extends ActionPlayer {
 
 		//Compensate sprite rotation
 		layer.setAngle(angle+90);
-
 	}
 
 	private boolean reachTarget(PointInt2D target) {
@@ -231,7 +273,7 @@ public class Speciemen extends ActionPlayer {
 	private PlanningTask currentTask() {
 		return tasks.get(tasks.size()-1);
 	}
-	
+
 	public void addTask(PlanningTask task) {
 		tasks.add(task);
 	}
@@ -284,24 +326,38 @@ public class Speciemen extends ActionPlayer {
 	}
 
 	public double[] getPositionAsArray() {
-		
+
 		double[] position = new double[2];
 		position[0] = getDx();
 		position[1] = getDy();
-		
+
 		return position;
 	}
-	
+
 	public int getSensorRadius() {
 		return sensorRadius;
 	}
 
 	public void discovered(Fountain fountain) {
-		if(reported.contains(fountain))
-			return;
 		
+		if(fountain.getNutrient() != nutrient || knownFountains.contains(fountain))
+			return;
+
 		found.add(fountain);
-		reported.add(fountain);
+		knownFountains.add(fountain);
+		addFountain(fountain);
+	}
+	
+	private void addFountain(Fountain fountain) {
+		try {
+			fountainsTree.insert(fountain.getPositionAsArray(), fountain);
+		} catch (KeySizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (KeyDuplicateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 
 }
