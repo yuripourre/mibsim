@@ -9,13 +9,16 @@ import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
-import br.com.mibsim.building.basement.BlueBasement;
-import br.com.mibsim.building.basement.GreenBasement;
-import br.com.mibsim.building.basement.RedBasement;
+import br.com.mibsim.building.basement.LurkerBasement;
+import br.com.mibsim.building.basement.UltraliskBasement;
+import br.com.mibsim.building.basement.HydraliskBasement;
 import br.com.mibsim.editor.ZergGrid;
-import br.com.mibsim.specie.BlueLurker;
-import br.com.mibsim.specie.GreenUltralisk;
-import br.com.mibsim.specie.RedHydralisk;
+import br.com.mibsim.model.fountain.AdamantiteFountain;
+import br.com.mibsim.model.fountain.Fountain;
+import br.com.mibsim.model.fountain.WaterFountain;
+import br.com.mibsim.specie.Lurker;
+import br.com.mibsim.specie.Ultralisk;
+import br.com.mibsim.specie.Hydralisk;
 import br.com.mibsim.specie.Speciemen;
 import br.com.tide.input.controller.Controller;
 import br.com.tide.input.controller.EasyController;
@@ -26,15 +29,19 @@ public class AnotherSimulator extends Application {
 
 	private Speciemen bug;
 
-	private RedBasement redBasement;
-	private GreenBasement greenBasement;
-	private BlueBasement blueBasement;
+	private HydraliskBasement redBasement;
+	private UltraliskBasement greenBasement;
+	private LurkerBasement blueBasement;
 
 	private boolean paused = true;
 
 	private List<Speciemen> bugs = new ArrayList<Speciemen>();
+	private List<Fountain> fountains = new ArrayList<Fountain>();
 	
 	private ZergGrid floor;
+	
+	private boolean drawSensors = true;
+	private boolean drawHealthBar = true;	
 	
 	public AnotherSimulator(int w, int h) {
 		super(w, h);
@@ -43,17 +50,19 @@ public class AnotherSimulator extends Application {
 	@Override
 	public void load() {
 
-		redBasement = new RedBasement(320, 32*10);
-		greenBasement = new GreenBasement(32*20, 32*3);
-		blueBasement = new BlueBasement(32*15, 32*3);
+		redBasement = new HydraliskBasement(320, 32*10);
+		greenBasement = new UltraliskBasement(32*20, 32*3);
+		blueBasement = new LurkerBasement(32*15, 32*3);
 
 		//bug = new BlueLurker(100, 200);
 		//bug = new GreenUltralisk(100, 200);		
 
-		bug = new RedHydralisk(100, 200, redBasement);
+		bug = new Hydralisk(100, 200, redBasement);
 		bugs.add(bug);
 		
-		generateRandomCreatures(40);		
+		generateRandomCreatures(40);
+		
+		generateFountains();
 
 		controller = new EasyController(bug);
 				
@@ -77,12 +86,12 @@ public class AnotherSimulator extends Application {
 
 			int specie = random.nextInt(3);
 
-			Speciemen bug = new RedHydralisk(x, y, redBasement);
+			Speciemen bug = new Hydralisk(x, y, redBasement);
 
 			if(specie == 1) {
-				bug = new GreenUltralisk(x, y, greenBasement);
+				bug = new Ultralisk(x, y, greenBasement);
 			} else if(specie == 2) {
-				bug = new BlueLurker(x, y, blueBasement);
+				bug = new Lurker(x, y, blueBasement);
 			}
 
 			float angle = random.nextInt(360);
@@ -91,6 +100,12 @@ public class AnotherSimulator extends Application {
 
 			bugs.add(bug);
 		}
+	}
+	
+	private void generateFountains() {
+		fountains.add(new WaterFountain(300, 400));
+		
+		fountains.add(new AdamantiteFountain(700, 400));
 	}
 
 	@Override
@@ -118,15 +133,9 @@ public class AnotherSimulator extends Application {
 		//map.draw(g);
 		//map.getMap().draw(g, 0, 0, 32, 28);
 		floor.draw(g);
-
-		for(Speciemen bug: bugs) {
-			bug.drawSensors(g, offsetX, offsetY);
-		}
-		
-		for(Speciemen bug: bugs) {	
-			bug.draw(g, offsetX, offsetY);
-			bug.drawHealthBar(g, offsetX, offsetY);
-		}
+				
+		drawSpeciemens(g);
+		drawFountains(g);
 
 		redBasement.draw(g, offsetX, offsetY);
 		greenBasement.draw(g, offsetX, offsetY);
@@ -134,6 +143,24 @@ public class AnotherSimulator extends Application {
 
 		//g.resetCamera(extendedCamera);
 		//extendedCamera.draw(g);
+	}
+	
+	private void drawSpeciemens(Graphic g) {
+		for(Speciemen bug: bugs) {
+			if(drawSensors)
+				bug.drawSensors(g, offsetX, offsetY);
+			
+			bug.draw(g, offsetX, offsetY);
+			
+			if(drawHealthBar)
+				bug.drawHealthBar(g, offsetX, offsetY);
+		}
+	}
+	
+	private void drawFountains(Graphic g) {
+		for(Fountain fountain: fountains) {
+			fountain.draw(g, offsetX, offsetY);
+		}
 	}
 
 	@Override
@@ -165,6 +192,14 @@ public class AnotherSimulator extends Application {
 
 		if(event.isKeyDown(KeyEvent.TSK_SPACE)) {
 			paused = !paused;
+		}
+		
+		if(event.isKeyDown(KeyEvent.TSK_S)) {
+			drawSensors = !drawSensors;	
+		}
+		
+		if(event.isKeyDown(KeyEvent.TSK_H)) {
+			drawHealthBar = !drawHealthBar;	
 		}
 
 		return null;

@@ -12,6 +12,7 @@ import br.com.etyllica.linear.Point2D;
 import br.com.etyllica.linear.PointInt2D;
 import br.com.mibsim.building.basement.Basement;
 import br.com.mibsim.fx.Dialog;
+import br.com.mibsim.model.fountain.Nutrient;
 import br.com.mibsim.planning.PlanningAction;
 import br.com.mibsim.planning.PlanningTask;
 import br.com.tide.action.player.ActionPlayer;
@@ -28,6 +29,8 @@ public class Speciemen extends ActionPlayer {
 	protected int reportEnergy = 10;
 	protected int turnEnergy = 1;
 	protected int sensorRadius = 100;
+	
+	protected Nutrient nutrient = Nutrient.WATER;
 
 	protected boolean dead = false;
 	protected boolean hungry = false;

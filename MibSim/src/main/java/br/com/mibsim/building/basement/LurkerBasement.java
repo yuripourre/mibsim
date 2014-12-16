@@ -1,9 +1,9 @@
 package br.com.mibsim.building.basement;
 
 
-public class BlueBasement extends Basement {
+public class LurkerBasement extends Basement {
 
-	public BlueBasement(int x, int y) {
+	public LurkerBasement(int x, int y) {
 		super(x, y, "blue_basement.png");
 	}
 
