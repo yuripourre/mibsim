@@ -182,7 +182,7 @@ public class Speciemen extends ActionPlayer {
 			break;
 
 		case FEED:
-			
+			drainNutrients(nearest);
 			break;
 		}
 	}
@@ -191,18 +191,36 @@ public class Speciemen extends ActionPlayer {
 
 		if(fountainsTree.isEmpty())
 			return;
-		
+
 		try {
-			
+
 			nearest = fountainsTree.nearest(getPositionAsArray());
-
-			PlanningTask feed = new PlanningTask(PlanningAction.FEED, nearest.getCenter());
-
-			tasks.add(feed);
 
 		} catch (KeySizeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		searchForFood(nearest);
+	}
+
+	private void searchForFood(Fountain fountain) {
+
+		PlanningTask feed = new PlanningTask(PlanningAction.FEED, fountain.getCenter());
+
+		tasks.add(feed);
+	}
+
+	private void drainNutrients(Fountain fountain) {
+		int quantity = fountain.drain(this);
+
+		currentHealth += quantity;
+
+		if(currentHealth >= health) {
+			currentHealth = health;
+			return;
+		} else {
+			searchForFood(fountain);
 		}
 	}
 
@@ -234,13 +252,13 @@ public class Speciemen extends ActionPlayer {
 		//Clear database
 		knownFountains.clear();
 		fountainsTree = new KDTree<Fountain>(2);
-		
+
 		//Update database
 		for(Fountain fountain: basement.getFountainsSet()) {
 			addFountain(fountain);
 			knownFountains.add(fountain);
 		}
-		
+
 	}
 
 	private boolean isHungry() {
@@ -339,7 +357,7 @@ public class Speciemen extends ActionPlayer {
 	}
 
 	public void discovered(Fountain fountain) {
-		
+
 		if(fountain.getNutrient() != nutrient || knownFountains.contains(fountain))
 			return;
 
@@ -347,7 +365,7 @@ public class Speciemen extends ActionPlayer {
 		knownFountains.add(fountain);
 		addFountain(fountain);
 	}
-	
+
 	private void addFountain(Fountain fountain) {
 		try {
 			fountainsTree.insert(fountain.getPositionAsArray(), fountain);

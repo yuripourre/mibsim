@@ -195,8 +195,9 @@ public class AnotherSimulator extends Application {
 		//map.getMap().draw(g, 0, 0, 32, 28);
 		floor.draw(g);
 
-		drawSpeciemens(g);
 		drawFountains(g);
+		
+		drawSpeciemens(g);		
 
 		redBasement.draw(g, offsetX, offsetY);
 		greenBasement.draw(g, offsetX, offsetY);

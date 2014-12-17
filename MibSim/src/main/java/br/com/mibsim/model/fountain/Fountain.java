@@ -1,6 +1,7 @@
 package br.com.mibsim.model.fountain;
 
 import br.com.mibsim.building.Building;
+import br.com.mibsim.specie.Speciemen;
 
 public abstract class Fountain extends Building {
 		
@@ -18,17 +19,23 @@ public abstract class Fountain extends Building {
 		this.nutrient = nutrient;
 	}
 		
-	public int drain(int quantity) {
+	public int drain(Speciemen speciemen) {
+		
+		int quantity = 100;
 		
 		if(totalCapacity != INFINITY) {
 			currentCapacity -= quantity;
 		}
 				
-		return currentCapacity;
+		return quantity;
 	}
 
 	public Nutrient getNutrient() {
 		return nutrient;
 	}
+
+	public int getCurrentCapacity() {
+		return currentCapacity;
+	}	
 	
 }
