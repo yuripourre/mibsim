@@ -32,8 +32,8 @@ public class SpinnerForm {
 		titleLabel.setFontSize(24);
 		
 		foodSpinner = new NutrientSpinner(x, y+offset+spacing*0, spinnerW, spinnerH);
-		speedSpinner = new SpeedSpinner(x, y+offset+spacing*1, spinnerW, spinnerH);
-		metabolismSpinner = new MetabolismSpinner(x, y+offset+spacing*2, spinnerW, spinnerH);
+		metabolismSpinner = new MetabolismSpinner(x, y+offset+spacing*1, spinnerW, spinnerH);
+		speedSpinner = new SpeedSpinner(x, y+offset+spacing*2, spinnerW, spinnerH);
 		hungerSpinner = new HungerThresholdSpinner(x, y+offset+spacing*3, spinnerW, spinnerH);
 		capacitySpinner = new CapacitySpinner(x, y+offset+spacing*4, spinnerW, spinnerH);
 	}

@@ -12,6 +12,12 @@ public class Lurker extends Speciemen {
 		
 		layer.setFrames(7);
 		
+		currentSpeed = 6;
+		health = 8000;
+		currentHealth = health;
+		hungryThreshold = 3600;
+		metabolism = 5;
+		
 		deadLayer = new ImageLayer("blue_lurker_dead.png");
 		
 		nutrient = Nutrient.ADAMANTITE;

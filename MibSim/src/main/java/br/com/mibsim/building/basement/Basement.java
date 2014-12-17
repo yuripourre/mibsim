@@ -83,8 +83,8 @@ public class Basement extends Building {
 		
 		final int LINE_WIDTH = perimeter*2+1;
 		
-		final int SECTOR_WIDTH = 64;
-		final int SECTOR_HEIGHT = 64;
+		final int SECTOR_WIDTH = 64*2;
+		final int SECTOR_HEIGHT = 64*2;
 		
 		int x = getCenter().getX();
 		int y = getCenter().getY();

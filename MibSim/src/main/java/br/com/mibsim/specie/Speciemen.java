@@ -27,7 +27,7 @@ public class Speciemen extends ActionPlayer {
 
 	protected int health = 10000;
 	protected int currentHealth = health;
-	protected int hungryLimiar = health/3;
+	protected int hungryThreshold = health/3;
 	protected int metabolism = 2;
 
 	protected int breathEnergy = 1;
@@ -62,7 +62,7 @@ public class Speciemen extends ActionPlayer {
 
 	public Speciemen(int x, int y, int tileW, int tileH, String path, Basement basement) {
 		super(x, y);
-
+		
 		startAngle = 0;
 
 		layer = new AnimatedLayer(x, y, tileW, tileH, path);
@@ -262,7 +262,7 @@ public class Speciemen extends ActionPlayer {
 	}
 
 	private boolean isHungry() {
-		return currentHealth<hungryLimiar;
+		return currentHealth<hungryThreshold;
 	}
 
 	private void turnToTarget(PointInt2D target) {

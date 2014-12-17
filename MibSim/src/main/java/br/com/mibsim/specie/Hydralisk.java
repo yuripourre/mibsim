@@ -10,6 +10,12 @@ public class Hydralisk extends Speciemen {
 		super(x, y, 42, 405/7, "red_hydralisk.png", basement);
 		layer.setFrames(7);
 		
+		currentSpeed = 8;
+		health = 5000;
+		currentHealth = health;
+		hungryThreshold = 3000;
+		metabolism = 2;
+		
 		deadLayer = new ImageLayer("red_hydralisk_dead.png");
 	}
 

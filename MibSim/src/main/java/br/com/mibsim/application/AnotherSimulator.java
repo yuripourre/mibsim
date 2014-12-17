@@ -53,14 +53,14 @@ public class AnotherSimulator extends Application {
 	public AnotherSimulator(int w, int h) {
 		super(w, h);
 
-		//paused = true;
+		paused = true;
 	}
 
 	@Override
 	public void load() {
 
 		redBasement = new HydraliskBasement(320, 32*10);
-		greenBasement = new UltraliskBasement(32*20, 32*3);
+		greenBasement = new UltraliskBasement(32*23, 32*6);
 		blueBasement = new LurkerBasement(32*15, 32*3);
 
 		//bug = new BlueLurker(100, 200);
@@ -77,7 +77,7 @@ public class AnotherSimulator extends Application {
 
 		floor = new ZergGrid(w, h);
 
-		updateAtFixedRate(50);
+		updateAtFixedRate(80);
 
 		loading = 100;
 	}
@@ -117,8 +117,11 @@ public class AnotherSimulator extends Application {
 
 		try {
 
-			addWaterFountain(300,400);
-			addAdamantiteFountain(700, 400);
+			addWaterFountain(290,-70);
+			
+			addAdamantiteFountain(700, 60);			
+			addAdamantiteFountain(660, -240);
+			addAdamantiteFountain(430, -100);
 
 		} catch (KeySizeException e) {
 			// TODO Auto-generated catch block

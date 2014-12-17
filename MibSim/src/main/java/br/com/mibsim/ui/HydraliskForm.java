@@ -12,7 +12,7 @@ public class HydraliskForm extends SpinnerForm {
 		
 		speedSpinner.setValue(8);
 		metabolismSpinner.setValue(2);
-		hungerSpinner.setValue(3300);
+		hungerSpinner.setValue(3000);
 		capacitySpinner.setValue(5000);
 	}	
 	
